@@ -24,7 +24,8 @@ CREATE TABLE person (
 	created_by varchar(20),
 	last_updated TIMESTAMP,
 	modified_by varchar(20),
-	deleted boolean)
+	deleted boolean);
+	
 CREATE TRIGGER update_person_modtime BEFORE UPDATE ON person FOR EACH ROW EXECUTE PROCEDURE  update_modified_column();
 -- Blood(blood_id, blood_group, amount)
 -- CREATE TYPE blood_group AS ENUM ('A+', 'A-','B+', 'B-','AB++', 'AB-','0+', '0-');
@@ -32,14 +33,14 @@ CREATE TRIGGER update_person_modtime BEFORE UPDATE ON person FOR EACH ROW EXECUT
 CREATE TABLE blood ( 
     blood_id serial PRIMARY KEY,    
 	blood_group varchar(20),
-	amount int )
+	amount int );
 -- Patient(patient_id, person_id, blood_id)
 CREATE TABLE patient ( 
     patient_id serial PRIMARY KEY,
 	person_id int,
 	blood_id int,
 	CONSTRAINT person_id FOREIGN KEY (person_id) REFERENCES person(person_id),
-    CONSTRAINT blood_id FOREIGN KEY (blood_id) REFERENCES blood(blood_id))
+    CONSTRAINT blood_id FOREIGN KEY (blood_id) REFERENCES blood(blood_id));
 
 
 -- Role(role_id, role_name)(Doctor, Nurse, Receptionist, Admin, Patient)
@@ -47,29 +48,32 @@ CREATE TABLE patient (
 CREATE TABLE role ( 
     role_id serial PRIMARY KEY,
 	role_name varchar
-	)
+	);
 
+-- Department(department_id, name, description)
+CREATE TABLE department ( 
+    department_id serial PRIMARY KEY,    
+	name varchar(20),
+	description varchar(100) );
+-- CREATE TYPE app_status AS ENUM ('Approved', 'Cancalled', 'Pending');	
+-- Appointment(appointment_id, patient_id, doctor_id, date, status, created_by, last_updated, modified_by , deleted)
 
 -- Employee(employee_id, person_id, role_id)
 CREATE TABLE employee ( 
     employee_id serial PRIMARY KEY,
 	person_id int,
 	role_id int,
+	department_id int,
 	CONSTRAINT person_id FOREIGN KEY (person_id) REFERENCES person(person_id),
-    CONSTRAINT role_id FOREIGN KEY (role_id) REFERENCES role(role_id))
+    CONSTRAINT role_id FOREIGN KEY (role_id) REFERENCES role(role_id),
+	CONSTRAINT department_id FOREIGN KEY (department_id) REFERENCES department(department_id));
 
 
 
 
 
 
--- Department(department_id, name, description)
-CREATE TABLE department ( 
-    department_id serial PRIMARY KEY,    
-	name varchar(20),
-	description varchar(100) )
--- CREATE TYPE app_status AS ENUM ('Approved', 'Cancalled', 'Pending');	
--- Appointment(appointment_id, patient_id, doctor_id, date, status, created_by, last_updated, modified_by , deleted)
+
 CREATE TABLE appointment ( 
     appointment_id serial PRIMARY KEY,
 	patient_id int,
@@ -81,7 +85,7 @@ CREATE TABLE appointment (
 	modified_by varchar(20),
 	deleted boolean,
 	CONSTRAINT patient_id FOREIGN KEY (patient_id) REFERENCES patient(patient_id),
-    CONSTRAINT doctor_id FOREIGN KEY (doctor_id) REFERENCES employee(employee_id))
+    CONSTRAINT doctor_id FOREIGN KEY (doctor_id) REFERENCES employee(employee_id));
 
 
 -- Prescription(prescription_id, appointment_id,  date, note)
@@ -89,14 +93,14 @@ CREATE TABLE prescription (
     prescription_id serial PRIMARY KEY,
 	appointment_id int,
    CONSTRAINT appointment_id FOREIGN KEY (appointment_id) REFERENCES appointment(appointment_id)
-)
+);
 
 -- Medicine(medicine_id, medicine, prescription_id)
 CREATE TABLE medicine ( 
     medicine_id serial PRIMARY KEY,  
 	name varchar(30),
 	strength int
-	 )
+	 );
 
 CREATE TABLE prescription_medicine ( 
 	prescription_id int,
@@ -105,7 +109,7 @@ CREATE TABLE prescription_medicine (
 	duartion varchar(20),
 	primary key(prescription_id,medicine_id),	
  	CONSTRAINT prescription_id FOREIGN KEY (prescription_id) REFERENCES prescription(prescription_id),
-     CONSTRAINT medicine_id FOREIGN KEY (medicine_id) REFERENCES medicine(medicine_id))
+     CONSTRAINT medicine_id FOREIGN KEY (medicine_id) REFERENCES medicine(medicine_id));
 
 
 
@@ -114,4 +118,4 @@ CREATE TABLE prescription_medicine (
     donner_id serial PRIMARY KEY,    
 	person_id int,
 	donnation_date date,
-    CONSTRAINT person_id FOREIGN KEY (person_id) REFERENCES person(person_id))
+    CONSTRAINT person_id FOREIGN KEY (person_id) REFERENCES person(person_id));
