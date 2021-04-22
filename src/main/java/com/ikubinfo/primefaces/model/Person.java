@@ -20,10 +20,7 @@ public class Person {
 	private String modifiedBy;
 	private boolean deleted; 
 	
-	
-	
-	
-	
+
 	
 	public Person() {
 		super();

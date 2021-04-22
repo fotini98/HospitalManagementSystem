@@ -2,10 +2,57 @@
 CREATE OR REPLACE FUNCTION update_modified_column() 
 RETURNS TRIGGER AS $$
 BEGIN
-    NEW.modified = now();
+    NEW.last_updated = now();
     RETURN NEW; 
 END;
 $$ language 'plpgsql';
+
+create trigger 
+   last_updated 
+before insert or update on 
+  person 
+for each row execute 
+   function update_modified_column();
+
+	CREATE OR REPLACE FUNCTION public.age_calc()
+ RETURNS trigger
+ LANGUAGE plpgsql
+AS $function$
+DECLARE
+    age_int integer;
+BEGIN
+
+    SELECT INTO
+        age_int
+    date_part('years', age(NEW.birth_date))::int;
+
+    NEW.age = age_int;
+RETURN NEW;
+END;
+
+$function$
+
+create trigger 
+   age 
+before insert or update on 
+  person 
+for each row execute 
+   function age_calc();
+   
+CREATE OR REPLACE FUNCTION deleted_false() 
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.deleted = 'false';
+    RETURN NEW; 
+END;
+$$ language 'plpgsql';
+
+create trigger 
+   deleted 
+before insert or update on 
+  person 
+for each row execute 
+   function deleted_false();
 
 -- CREATE TYPE gender AS ENUM ('Female', 'Male');
 
@@ -110,8 +157,7 @@ CREATE TABLE prescription_medicine (
 	primary key(prescription_id,medicine_id),	
  	CONSTRAINT prescription_id FOREIGN KEY (prescription_id) REFERENCES prescription(prescription_id),
      CONSTRAINT medicine_id FOREIGN KEY (medicine_id) REFERENCES medicine(medicine_id));
-
-
+     
 
 -- Donner(donner_id, person_id, donnation_date)
 	CREATE TABLE donner ( 

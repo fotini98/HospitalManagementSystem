@@ -1,0 +1,45 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+</h:head>
+<h:body>
+
+<p:growl id="growl"></p:growl>
+			<h:form id="form">
+			</h:form>
+			<p:dataTable id="table" value="#{doctorManagedBean.doctors}"
+					var="doctor" >
+
+					<p:column headerText="Full Name">
+						<p:outputLabel value="#{doctor.fullName}"></p:outputLabel>
+					</p:column>
+				
+						<p:column headerText="Email">
+						<p:outputLabel value="#{doctor.email}"></p:outputLabel>
+					</p:column>
+						<p:column headerText="Address">
+						<p:outputLabel value="#{doctor.fullName}"></p:outputLabel>
+					</p:column>
+						<p:column headerText="phone">
+						<p:outputLabel value="#{doctor.fullName}"></p:outputLabel>
+					</p:column>
+						<p:column headerText="Birth Date">
+						<p:outputLabel value="#{doctor.fullName}"></p:outputLabel>
+					</p:column>
+						<p:column headerText="Age">
+						<p:outputLabel value="#{doctor.fullName}"></p:outputLabel>
+					</p:column>
+				
+						<p:column headerText="Created By">
+						<p:outputLabel value="#{doctor.fullName}"></p:outputLabel>
+					</p:column>
+				
+						<p:column headerText="Department">
+						<p:outputLabel value="#{doctor.department.name}"></p:outputLabel>
+					</p:column>
+				</p:dataTable>
+</h:body>
+</html>

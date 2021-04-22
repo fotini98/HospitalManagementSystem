@@ -1,6 +1,6 @@
 package com.ikubinfo.primefaces.model;
 
-public class Employee {
+public class Employee extends Person{
 	
 	/*
 	 * CREATE TABLE employee ( employee_id serial PRIMARY KEY, person_id int,
@@ -9,18 +9,23 @@ public class Employee {
 	 * role(role_id))
 	 */
 	private long employeeId;
-	private long patientId;
 	private long roleId;
 	private long departmentId;
+	private Role role;
+	private Department department;
 	
+
 	
 	public Employee() {
 		super();
 	}
-	public Employee(long patientId, long roleId) {
+		
+	
+	public Employee(long employeeId,  long roleId, long departmentId) {
 		super();
-		this.patientId = patientId;
+		this.employeeId = employeeId;
 		this.roleId = roleId;
+		this.departmentId = departmentId;
 	}
 	public long getEmployeeId() {
 		return employeeId;
@@ -28,12 +33,7 @@ public class Employee {
 	public void setEmployeeId(long employeeId) {
 		this.employeeId = employeeId;
 	}
-	public long getPatientId() {
-		return patientId;
-	}
-	public void setPatientId(long patientId) {
-		this.patientId = patientId;
-	}
+
 	public long getRoleId() {
 		return roleId;
 	}
@@ -46,11 +46,28 @@ public class Employee {
 	public void setDepartmentId(long departmentId) {
 		this.departmentId = departmentId;
 	}
-	@Override
-	public String toString() {
-		return "Employee [employeeId=" + employeeId + ", patientId=" + patientId + ", roleId=" + roleId
-				+ ", departmentId=" + departmentId + "]";
+
+
+	public Role getRole() {
+		return role;
 	}
+
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+
+	public Department getDepartment() {
+		return department;
+	}
+
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+	
+	
 	
 	
 

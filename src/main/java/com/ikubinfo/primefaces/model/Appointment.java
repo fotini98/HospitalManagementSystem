@@ -15,6 +15,9 @@ public class Appointment {
 	private String modifiedBy;
 	private boolean deleted;
 	
+	private Employee doctor;
+	private Patient patient;
+	
 	
 	
 	public Appointment() {
@@ -85,6 +88,18 @@ public class Appointment {
 	}
 	public void setAppointmentId(long appointmentId) {
 		this.appointmentId = appointmentId;
+	}
+	public Employee getDoctor() {
+		return doctor;
+	}
+	public void setDoctor(Employee doctor) {
+		this.doctor = doctor;
+	}
+	public Patient getPatient() {
+		return patient;
+	}
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	} 
 	
 	
