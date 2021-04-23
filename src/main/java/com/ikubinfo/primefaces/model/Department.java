@@ -1,5 +1,8 @@
 package com.ikubinfo.primefaces.model;
 
+import javax.faces.convert.FacesConverter;
+
+@FacesConverter("department")
 public class Department {
 	private long departmentId;
 	private String name;
@@ -16,6 +19,9 @@ public class Department {
 		this.departmentId = departmentId;
 		this.name = name;
 		this.desription = desription;
+	}
+	public Department() {
+		// TODO Auto-generated constructor stub
 	}
 	public long getDepartmentId() {
 		return departmentId;
@@ -37,7 +43,7 @@ public class Department {
 	}
 	@Override
 	public String toString() {
-		return "Department [departmentId=" + departmentId + ", name=" + name + ", desription=" + desription + "]";
+		return  name ;
 	}
 	
 	

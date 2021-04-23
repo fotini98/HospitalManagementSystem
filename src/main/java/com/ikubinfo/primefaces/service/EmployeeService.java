@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ikubinfo.primefaces.model.Department;
 import com.ikubinfo.primefaces.model.Employee;
 import com.ikubinfo.primefaces.repository.EmployeeRepository;
 
@@ -23,6 +24,14 @@ public class EmployeeService {
 	public boolean deleteEmployee(Employee employee) {
 		return dao.deleteEmployee(employee);
 	}
+	public List<Department> getAllDepartments() {
+		return dao.getAllDepartments();
+	}
+	public boolean updateEmployee(Employee employee) {
+		    dao.updatePerson(employee);
+		return dao.updateEmployee(employee);
+	}
+	
 	
 
 }

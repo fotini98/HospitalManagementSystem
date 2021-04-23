@@ -1,6 +1,7 @@
 package com.ikubinfo.primefaces.managedbean;
 
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -8,16 +9,26 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
+import com.ikubinfo.primefaces.model.Department;
 import com.ikubinfo.primefaces.model.Employee;
+import com.ikubinfo.primefaces.model.Role;
 import com.ikubinfo.primefaces.service.EmployeeService;
 import com.ikubinfo.primefaces.util.Messages;
 
 @ManagedBean
 @ViewScoped
-public class DoctorManagedBean {
+public class DoctorManagedBean implements Serializable{
 	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Employee doctor;
 	private List<Employee> doctors;
+	private List<Department> departments; 
+	
+	private Department department;
 	
 	@ManagedProperty(value = "#{employeeService}")
 	private EmployeeService doctorService;
@@ -29,17 +40,46 @@ public class DoctorManagedBean {
 	public void init() {
 
 		doctors = doctorService.getAllEmployees("Doctor");
+		departments= doctorService.getAllDepartments();
 		doctor = new Employee();
+		department=new Department();
 
 	}
 	
 	public void save() {
+		doctor.setDepartment(department);
+		doctor.setRole(new Role(0,"Doctor"));
 		if(doctorService.saveEmployee(doctor)) {
 			doctors = doctorService.getAllEmployees("Doctor");
+			doctor=new Employee();
 			messages.showInfoMessage("Doctor was added successfully");
 		}else {
 			messages.showInfoMessage("Something went wrong!!");
 		}
+	}
+	
+	public void delete() {
+		doctor.setRole(new Role(0,"Doctor"));
+		System.out.println(doctor );
+		if(doctorService.deleteEmployee(doctor)) {
+			doctors = doctorService.getAllEmployees("Doctor");
+		messages.showInfoMessage("Doctor was removed successfully");
+	}else {
+		messages.showInfoMessage("Something went wrong!!");
+	
+	 }
+	}
+	
+	public void update() {
+		doctor.setDepartment(department);
+		System.out.println(doctor +" department "+department.getDepartmentId());
+		if(doctorService.updateEmployee(doctor)) {
+			doctors = doctorService.getAllEmployees("Doctor");
+		messages.showInfoMessage("Doctor was updated successfully");
+	}else {
+		messages.showInfoMessage("Something went wrong!!");
+	
+	 }
 	}
 	
 
@@ -73,6 +113,22 @@ public class DoctorManagedBean {
 
 	public void setMessages(Messages messages) {
 		this.messages = messages;
+	}
+
+	public List<Department> getDepartments() {
+		return departments;
+	}
+
+	public void setDepartments(List<Department> departments) {
+		this.departments = departments;
+	}
+
+	public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
 	}
 	
 	
