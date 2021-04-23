@@ -72,7 +72,7 @@ public class DoctorManagedBean implements Serializable{
 	
 	public void update() {
 		doctor.setDepartment(department);
-		System.out.println(doctor +" department "+department.getDepartmentId());
+		System.out.println(doctor +" department "+department.getName());
 		if(doctorService.updateEmployee(doctor)) {
 			doctors = doctorService.getAllEmployees("Doctor");
 		messages.showInfoMessage("Doctor was updated successfully");

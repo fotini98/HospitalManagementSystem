@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ikubinfo.primefaces.model.Department;
 import com.ikubinfo.primefaces.model.Employee;
@@ -27,6 +28,7 @@ public class EmployeeService {
 	public List<Department> getAllDepartments() {
 		return dao.getAllDepartments();
 	}
+	@Transactional
 	public boolean updateEmployee(Employee employee) {
 		    dao.updatePerson(employee);
 		return dao.updateEmployee(employee);
