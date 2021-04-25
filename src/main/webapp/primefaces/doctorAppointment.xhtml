@@ -1,0 +1,169 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+</h:head>
+<h:body>
+
+	<p:growl id="growl"></p:growl>
+
+
+	<p:commandButton style="float:right;" value="Add Appointment"
+		update="addDialog" process="@this"
+		styleClass="rounded-button ui-button-success"
+		oncomplete="PF('AddDialog').show();">
+
+	</p:commandButton>
+
+
+	<p:dialog header="Add Appointment" id="addDialog" widgetVar="AddDialog"
+		modal="true">
+		<h:form id="addForm">
+
+
+
+			<h:panelGrid columns="2">
+
+				<p:outputLabel value="Patient" />
+				<p:selectOneMenu id="patients"
+					value="#{doctorAppointmentManagedBean.patient.fullName}"
+					label="Select ">
+
+					<f:selectItem itemLabel="Select Patient " itemValue="" />
+					<f:selectItems value="#{doctorAppointmentManagedBean.patients}"
+						var="patient" itemLabel="#{patient.fullName}"
+						itemValue="#{patient.fullName}" />
+
+				</p:selectOneMenu>
+
+
+				<p:outputLabel for="date" value="Time" />
+				<p:datePicker id="date"
+					value="#{doctorAppointmentManagedBean.appointment.date}"
+					showTime="true" locale="de" pattern="dd.MM.yyyy" />
+
+				<br></br>
+				<br></br>
+
+				<p:commandButton process="addDialog" update="table growl"
+					value="Save"
+					actionListener="#{doctorAppointmentManagedBean.create}"
+					oncomplete="PF('AddDialog').hide();" icon="pi pi-check">
+
+				</p:commandButton>
+
+
+
+			</h:panelGrid>
+		</h:form>
+
+	</p:dialog>
+
+
+
+	<center></center>
+
+
+	<p:dataTable value="#{doctorAppointmentManagedBean.appointments}"
+		var="appointment" id="table">
+		<f:facet name="header">
+			<div class="p-d-flex p-ai-center p-jc-between">
+				<span>List of Appointments</span>
+			</div>
+		</f:facet>
+
+		<p:column headerText="Patient">
+			<p:outputLabel value="#{appointment.patient.fullName}"></p:outputLabel>
+		</p:column>
+		<p:column headerText="Date">
+			<p:outputLabel value="#{appointment.date}"></p:outputLabel>
+		</p:column>
+		<p:column headerText="Status">
+			<p:outputLabel value="#{appointment.status}"></p:outputLabel>
+			
+		</p:column>
+
+		<p:column headerText="Actions">
+
+			<p:commandButton icon="pi pi-pencil" value="Edit"
+				update="updateDialog" process="@this"
+				styleClass="rounded-button ui-button-sucess"
+				oncomplete="PF('EditDialog').show();">
+
+				<f:setPropertyActionListener target="#{doctorAppointmentManagedBean.appointment}"
+					value="#{appointment}" />
+				<f:setPropertyActionListener
+					target="#{doctorAppointmentManagedBean.patient.fullName}"
+					value="#{appointment.patient.fullName}" />
+
+			</p:commandButton>
+
+
+			<p:commandButton immediate="true" value="Delete"
+				styleClass="rounded-button ui-button-danger" icon="pi pi-trash"
+				update="table growl" action="#{doctorAppointmentManagedBean.delete}">
+				<p:confirm header="Confirmation" message="Are you sure?"
+					icon="pi pi-exclamation-triangle" />
+
+				<f:setPropertyActionListener target="#{doctorAppointmentManagedBean.appointment}"
+					value="#{appointment}" />
+			</p:commandButton>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				<p:commandButton value="Yes" type="button"
+					styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+			</p:confirmDialog>
+
+		</p:column>
+
+	</p:dataTable>
+	
+	<p:dialog header="Edit Appointments" id="updateDialog" widgetVar="EditDialog"
+		modal="true">
+		<h:form id="dialogForm">
+
+			<h:panelGrid columns="2">
+			
+			<p:outputLabel value="Patient" />
+				<p:selectOneMenu id="patients"
+					value="#{doctorAppointmentManagedBean.patient.fullName}"
+					label="Select ">
+
+					<f:selectItem itemLabel="Select Patient " itemValue="" />
+					<f:selectItems value="#{doctorAppointmentManagedBean.patients}"
+						var="patient" itemLabel="#{patient.fullName}"
+						itemValue="#{patient.fullName}" />
+
+				</p:selectOneMenu>
+
+
+				<p:outputLabel for="date" value="Time" />
+				<p:datePicker id="date"
+					value="#{doctorAppointmentManagedBean.appointment.date}"
+					showTime="true" locale="de" pattern="dd.MM.yyyy" />
+
+				<br></br>
+				<br></br>
+		
+				<p:commandButton process="updateDialog" update="table growl"
+					value="Save" actionListener="#{doctorAppointmentManagedBean.update}"
+					oncomplete="PF('EditDialog').hide();">
+
+				</p:commandButton>
+
+
+
+			</h:panelGrid>
+		</h:form>
+
+	</p:dialog>
+
+
+
+
+</h:body>
+</html>

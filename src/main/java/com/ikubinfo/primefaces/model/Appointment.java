@@ -1,7 +1,10 @@
 package com.ikubinfo.primefaces.model;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class Appointment {
 
@@ -9,7 +12,7 @@ public class Appointment {
 	private long patientId;
 	private long doctorId;
 	private Date date;
-	private AppointmentStatus status;
+	private String status;
 	private String createdBy;
 	private Timestamp lastUpdated;
 	private String modifiedBy;
@@ -23,17 +26,18 @@ public class Appointment {
 	public Appointment() {
 		super();
 	}
-	public Appointment(long patientId, long doctorId, Date date, AppointmentStatus status, String createdBy,
+	public Appointment(long patientId, long doctorId, Date date, String createdBy, String status,
 			Timestamp lastUpdated, String modifiedBy, boolean deleted) {
 		super();
 		this.patientId = patientId;
 		this.doctorId = doctorId;
 		this.date = date;
-		this.status = status;
 		this.createdBy = createdBy;
 		this.lastUpdated = lastUpdated;
 		this.modifiedBy = modifiedBy;
 		this.deleted = deleted;
+		this.status= status;
+
 	}
 	public long getPatientId() {
 		return patientId;
@@ -53,10 +57,12 @@ public class Appointment {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	public AppointmentStatus getStatus() {
+	
+
+	public String getStatus() {
 		return status;
 	}
-	public void setStatus(AppointmentStatus status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 	public String getCreatedBy() {

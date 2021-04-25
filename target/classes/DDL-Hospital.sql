@@ -49,7 +49,7 @@ $$ language 'plpgsql';
 
 create trigger 
    deleted 
-before insert or update on 
+before insert on 
   person 
 for each row execute 
    function deleted_false();
