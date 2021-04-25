@@ -64,6 +64,7 @@ public class DoctorAppointmentManagedBean {
 	
 	public void delete() {
 		if(service.delete(appointment)) {
+			appointments=service.getAllDoctorAppointment(5);
 			message.showInfoMessage("Appointment deleted Successfully!");
 		}else {
 			message.showFatalMessage("Something went wrong!!");

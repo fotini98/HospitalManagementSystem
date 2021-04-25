@@ -6,7 +6,9 @@
 <h:head>
 </h:head>
 <h:body>
-
+<ui:composition template="/template/template.xhtml">
+		<ui:define name="content">
+		<div class="main">
 	<p:growl id="growl"></p:growl>
 
 	<p:commandButton style="float:right;" value="Add Doctor"
@@ -247,7 +249,12 @@
 
 			</h:panelGrid>
 		</h:form>
-
 	</p:dialog>
+	</div>
+	
+		</ui:define>
+	</ui:composition>
+	
+	
 </h:body>
 </html>
