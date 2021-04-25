@@ -21,7 +21,7 @@ public class AppointmentRowMapper  implements RowMapper<Appointment> {
 		patient.setFullName(rs.getString("patient"));
 		System.out.println(patient.getFullName());
 		appointment.setPatient(patient);
-		appointment.setDate(rs.getDate("date"));
+		appointment.setDate(rs.getTimestamp("date"));
 		appointment.setCreatedBy(rs.getString("created_by"));
 		appointment.setLastUpdated(rs.getTimestamp("last_updated"));
 		appointment.setModifiedBy(rs.getString("modified_by"));

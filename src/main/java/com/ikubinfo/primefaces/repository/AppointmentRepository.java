@@ -39,6 +39,7 @@ public class AppointmentRepository {
 	private static final String GET_PATIENT_ID="select patient_id from patient inner join person on person.person_id=patient.person_id\r\n"
 			+ "where person.full_name= ?";
 	
+	private static final String MARK_AS_COMPLETED="UPDATE appointment set status='Completed' where appointment_id= :appointmentId";
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	//private SimpleJdbcInsert insertAppointmentQuery;
 	private JdbcTemplate jdbcTemplate;
@@ -123,6 +124,13 @@ public class AppointmentRepository {
 		return namedParameterJdbcTemplate.update(UPDATE_QUERY, namedParameters)>0;
 	}
 	
+	public boolean markAsCompleted(Appointment appointment) {
+		MapSqlParameterSource namedParameters=new MapSqlParameterSource();
+		
+		namedParameters.addValue("appointmentId", appointment.getAppointmentId());
+		
+		return namedParameterJdbcTemplate.update(MARK_AS_COMPLETED, namedParameters)>0;
+	}
 	
 
 }

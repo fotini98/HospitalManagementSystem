@@ -43,6 +43,10 @@ public class AppointmentService {
 	public List<Patient> getPatients(){
 		return dao.getPatients();
 	}
+	
+	public boolean markAsCompleted(Appointment appointment) {
+		return dao.markAsCompleted(appointment);
+	}
 
 		
 	

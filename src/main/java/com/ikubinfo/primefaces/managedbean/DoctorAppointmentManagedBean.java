@@ -69,6 +69,17 @@ public class DoctorAppointmentManagedBean {
 			message.showFatalMessage("Something went wrong!!");
 		}
 	}
+	
+	public void markAsCompleted() {
+		System.out.println(" mark as complted invoked");
+		
+		if(service.markAsCompleted(appointment)) {
+			appointments=service.getAllDoctorAppointment(5);
+			message.showInfoMessage("Appointment Status changed to Completed Successfully!");
+		}else {
+			message.showFatalMessage("Something went wrong!!");
+		}
+	}
 
 
 	public Employee getDoctor() {

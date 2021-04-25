@@ -61,8 +61,6 @@
 
 	</p:dialog>
 
-
-
 	<center></center>
 
 
@@ -82,53 +80,66 @@
 		</p:column>
 		<p:column headerText="Status">
 			<p:outputLabel value="#{appointment.status}"></p:outputLabel>
-			
+
 		</p:column>
 
 		<p:column headerText="Actions">
 
+
+			<p:commandButton immediate="true" value="Mark as Completed"
+				styleClass="rounded-button ui-button-secondary" icon="pi pi-check"
+				update="table growl" 
+				action="#{doctorAppointmentManagedBean.markAsCompleted}" disabled="#{appointment.status eq 'Completed'}">
+				<f:setPropertyActionListener
+					target="#{doctorAppointmentManagedBean.appointment}"
+					value="#{appointment}" />
+			</p:commandButton>
+		</p:column>
+		<p:column headerText="">
 			<p:commandButton icon="pi pi-pencil" value="Edit"
 				update="updateDialog" process="@this"
 				styleClass="rounded-button ui-button-sucess"
-				oncomplete="PF('EditDialog').show();">
+				oncomplete="PF('EditDialog').show();" disabled="#{appointment.status eq 'Completed'}">
 
-				<f:setPropertyActionListener target="#{doctorAppointmentManagedBean.appointment}"
+				<f:setPropertyActionListener
+					target="#{doctorAppointmentManagedBean.appointment}"
 					value="#{appointment}" />
 				<f:setPropertyActionListener
 					target="#{doctorAppointmentManagedBean.patient.fullName}"
 					value="#{appointment.patient.fullName}" />
 
 			</p:commandButton>
-
-
+		</p:column>
+		<p:column headerText="">
 			<p:commandButton immediate="true" value="Delete"
 				styleClass="rounded-button ui-button-danger" icon="pi pi-trash"
 				update="table growl" action="#{doctorAppointmentManagedBean.delete}">
 				<p:confirm header="Confirmation" message="Are you sure?"
 					icon="pi pi-exclamation-triangle" />
 
-				<f:setPropertyActionListener target="#{doctorAppointmentManagedBean.appointment}"
+				<f:setPropertyActionListener
+					target="#{doctorAppointmentManagedBean.appointment}"
 					value="#{appointment}" />
 			</p:commandButton>
-
-			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-				<p:commandButton value="Yes" type="button"
-					styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
-				<p:commandButton value="No" type="button"
-					styleClass="ui-confirmdialog-no" icon="pi pi-times" />
-			</p:confirmDialog>
-
 		</p:column>
 
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Yes" type="button"
+				styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+			<p:commandButton value="No" type="button"
+				styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+		</p:confirmDialog>
+
+
 	</p:dataTable>
-	
-	<p:dialog header="Edit Appointments" id="updateDialog" widgetVar="EditDialog"
-		modal="true">
+
+	<p:dialog header="Edit Appointments" id="updateDialog"
+		widgetVar="EditDialog" modal="true">
 		<h:form id="dialogForm">
 
 			<h:panelGrid columns="2">
-			
-			<p:outputLabel value="Patient" />
+
+				<p:outputLabel value="Patient" />
 				<p:selectOneMenu id="patients"
 					value="#{doctorAppointmentManagedBean.patient.fullName}"
 					label="Select ">
@@ -148,15 +159,13 @@
 
 				<br></br>
 				<br></br>
-		
+
 				<p:commandButton process="updateDialog" update="table growl"
-					value="Save" actionListener="#{doctorAppointmentManagedBean.update}"
+					value="Save"
+					actionListener="#{doctorAppointmentManagedBean.update}"
 					oncomplete="PF('EditDialog').hide();">
 
 				</p:commandButton>
-
-
-
 			</h:panelGrid>
 		</h:form>
 
