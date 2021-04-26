@@ -4,15 +4,83 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
-<ui:composition template="/doctor-template/template.xhtml">
-		<ui:define name="content">
-		<div class="main">
-		</div>
-		</ui:define>
-		</ui:composition>
 </h:head>
-<body>
+<h:body>
+	<ui:composition template="/doctor-template/template.xhtml">
+		<ui:define name="content">
+			<div class="main">
 
-</body>
+				<p:growl id="growl"></p:growl>
+              <center></center>
 
+
+				<p:dataTable value="#{doctorPrescriptionManagedBean.prescriptions}"
+					var="prescription" id="table">
+					<f:facet name="header">
+						<div class="p-d-flex p-ai-center p-jc-between">
+							<span>List of Prescriptions</span>
+						</div>
+					</f:facet>
+
+					<p:column headerText="Prescription Id">
+						<p:outputLabel value="#{prescription.prescriptionId}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="Appointment Id">
+						<p:outputLabel value="#{prescription.appointmentId}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="Patient">
+						<p:outputLabel value="#{prescription.appointment.patient.fullName}"></p:outputLabel>
+
+					</p:column>
+
+					<p:column headerText="Actions">
+
+
+						<p:commandButton immediate="true" value="View"
+							styleClass="rounded-button ui-button-secondary"
+							icon="pi pi-eye" update="table growl"
+							action="#{doctorPrescriptionManagedBean.view}">
+							<!-- disabled="#{appointment.status eq 'Completed'}" -->
+							
+							<f:setPropertyActionListener
+								target="#{doctorPrescriptionManagedBean.prescription.prescriptionId}"
+								value="#{prescription.prescriptionId}" />
+								<f:setPropertyActionListener
+								target="#{doctorPrescriptionManagedBean.prescription.appointmentId}"
+								value="#{prescription.appointmentId}" />
+						</p:commandButton>
+					</p:column>
+					<p:column headerText="">
+						
+
+						<p:commandButton immediate="true" value="Update"
+							styleClass="rounded-button ui-button-sucess" icon="pi pi-pencil"
+							update="table growl"
+							action="#{doctorPrescriptionManagedBean.update}">
+							<f:setPropertyActionListener
+								target="#{doctorPrescriptionManagedBean.prescription.prescriptionId}"
+								value="#{prescription.prescriptionId}" />
+								<f:setPropertyActionListener
+								target="#{doctorPrescriptionManagedBean.prescription.appointmentId}"
+								value="#{prescription.appointmentId}" />
+						</p:commandButton>
+
+
+					</p:column>
+
+				</p:dataTable>
+
+				<p:dialog header="Edit Appointments" id="updateDialog"
+					widgetVar="EditDialog" modal="true">
+					<h:form id="dialogForm">
+
+					
+					</h:form>
+
+				</p:dialog>
+			</div>
+
+		</ui:define>
+	</ui:composition>
+</h:body>
 </html>

@@ -137,8 +137,9 @@ CREATE TABLE appointment (
 
 -- Prescription(prescription_id, appointment_id,  date, note)
 CREATE TABLE prescription ( 
-    prescription_id serial PRIMARY KEY,
-	appointment_id int,
+    prescription_id serial,
+	appointment_id int unique,
+    primary key(prescription_id),
    CONSTRAINT appointment_id FOREIGN KEY (appointment_id) REFERENCES appointment(appointment_id)
 );
 

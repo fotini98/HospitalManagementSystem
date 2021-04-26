@@ -12,7 +12,9 @@ import javax.faces.bean.ViewScoped;
 import com.ikubinfo.primefaces.model.Appointment;
 import com.ikubinfo.primefaces.model.Employee;
 import com.ikubinfo.primefaces.model.Patient;
+import com.ikubinfo.primefaces.model.Prescription;
 import com.ikubinfo.primefaces.service.AppointmentService;
+import com.ikubinfo.primefaces.service.PrescriptionService;
 import com.ikubinfo.primefaces.util.Messages;
 
 @ManagedBean
@@ -24,8 +26,13 @@ public class DoctorAppointmentManagedBean {
 	private List<Appointment> appointments;
 	private List<Patient> patients;
 	private Patient patient;//??
+	private Prescription prescription;
+	
 	@ManagedProperty(value = "#{appointmentService}")
 	private AppointmentService service;
+	
+	@ManagedProperty(value = "#{prescriptionService}")
+	private PrescriptionService prescriptionService;
 	
 	@ManagedProperty(value="#{messages}")
 	private Messages message;
@@ -144,6 +151,22 @@ public class DoctorAppointmentManagedBean {
 
 	public void setPatient(Patient patient) {
 		this.patient = patient;
+	}
+
+	public Prescription getPrescription() {
+		return prescription;
+	}
+
+	public void setPrescription(Prescription prescription) {
+		this.prescription = prescription;
+	}
+
+	public PrescriptionService getPrescriptionService() {
+		return prescriptionService;
+	}
+
+	public void setPrescriptionService(PrescriptionService prescriptionService) {
+		this.prescriptionService = prescriptionService;
 	}
 	
 	

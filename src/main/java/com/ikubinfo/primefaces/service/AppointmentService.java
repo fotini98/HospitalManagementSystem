@@ -45,9 +45,21 @@ public class AppointmentService {
 	}
 	
 	public boolean markAsCompleted(Appointment appointment) {
-		return dao.markAsCompleted(appointment);
+		appointment.setStatus("Completed");
+		return dao.updateAppointmentStatus(appointment);
 	}
-
+	public boolean approve(Appointment appointment) {
+		appointment.setStatus("Accepted");
+		return dao.updateAppointmentStatus(appointment);
+	}
+	public boolean reject(Appointment appointment) {
+		appointment.setStatus("Rejected");
+		return dao.updateAppointmentStatus(appointment);
+	}
+	
+	public List<Appointment> getDoctorReqAppointment(long doctor_id) {
+		return dao.getDoctorReqAppointment(doctor_id);
+	}
 		
 	
 

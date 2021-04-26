@@ -39,7 +39,9 @@ public class AppointmentRepository {
 	private static final String GET_PATIENT_ID="select patient_id from patient inner join person on person.person_id=patient.person_id\r\n"
 			+ "where person.full_name= ?";
 	
-	private static final String MARK_AS_COMPLETED="UPDATE appointment set status='Completed' where appointment_id= :appointmentId";
+	private static final String UPDATE_APP_STATUS="UPDATE appointment set status=:status where appointment_id= :appointmentId";
+	
+	
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	//private SimpleJdbcInsert insertAppointmentQuery;
 	private JdbcTemplate jdbcTemplate;
@@ -60,11 +62,26 @@ public class AppointmentRepository {
 
 		
 	}
+	
 	public List<Appointment> getAllDoctorAppointment(long doctor_id) {
 
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
 
-		String query=QUERY.concat(" and doctor_id= :doctorId ;");
+		String query=QUERY.concat(" and doctor_id= :doctorId;");
+		namedParameters.addValue("doctorId", doctor_id);
+		System.out.println(query);
+		try {
+		return namedParameterJdbcTemplate.query(query, namedParameters, new AppointmentRowMapper());
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+		return null;
+	}
+	public List<Appointment> getDoctorReqAppointment(long doctor_id) {
+
+		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
+
+		String query=QUERY.concat(" and doctor_id= :doctorId and  appointment.status='Requested';");
 		namedParameters.addValue("doctorId", doctor_id);
 		System.out.println(query);
 		try {
@@ -124,13 +141,18 @@ public class AppointmentRepository {
 		return namedParameterJdbcTemplate.update(UPDATE_QUERY, namedParameters)>0;
 	}
 	
-	public boolean markAsCompleted(Appointment appointment) {
+	public boolean updateAppointmentStatus(Appointment appointment) {
+		System.out.println("from updateappointmentstatus method"+ appointment.getStatus());
 		MapSqlParameterSource namedParameters=new MapSqlParameterSource();
 		
 		namedParameters.addValue("appointmentId", appointment.getAppointmentId());
+		namedParameters.addValue("status", appointment.getStatus());
 		
-		return namedParameterJdbcTemplate.update(MARK_AS_COMPLETED, namedParameters)>0;
+		
+		return namedParameterJdbcTemplate.update(UPDATE_APP_STATUS, namedParameters)>0;
 	}
+	
+	
 	
 
 }

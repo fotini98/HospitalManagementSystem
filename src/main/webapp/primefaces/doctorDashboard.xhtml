@@ -3,26 +3,14 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-<h:head>
-</h:head>
-<h:body>
+<h:head></h:head>
 	<ui:composition template="/doctor-template/template.xhtml">
 		<ui:define name="content">
 			<div class="main">
 
-				<p:growl id="growl"></p:growl>
-
-
-				
-
-
-					
-
-				<center></center>
-
-
 				<p:dataTable value="#{doctorReqAppointmentManagedBean.appointments}"
 					var="appointment" id="table">
+					<p:growl id="growl"></p:growl>
 					<f:facet name="header">
 						<div class="p-d-flex p-ai-center p-jc-between">
 							<span>List of Appointments</span>
@@ -42,26 +30,34 @@
 
 					<p:column headerText="Actions">
 
+						<form>
+							<p:commandButton immediate="true" value="Approve"
+								styleClass="rounded-button ui-button-secondary"
+								icon="pi pi-check" update="table growl"
+								action="#{doctorReqAppointmentManagedBean.approve}"
+								disabled="#{appointment.status eq 'Rejected'}">
+								<f:setPropertyActionListener
+									target="#{doctorReqAppointmentManagedBean.appointment}"
+									value="#{appointment}" />
+							</p:commandButton>
+						</form>
 
-						<p:commandButton immediate="true" value="Approve"
+						<p:commandButton immediate="true" value="Mark as Approved"
 							styleClass="rounded-button ui-button-secondary"
 							icon="pi pi-check" update="table growl"
-							action="#{doctorReqAppointmentManagedBean.approve}">
-							<!-- disabled="#{appointment.status eq 'Completed'}" -->
-							
+							action="#{doctorReqAppointmentManagedBean.approve}"
+							disabled="#{appointment.status eq 'Completed'}">
 							<f:setPropertyActionListener
-								target="#{doctorReqAppointmentManagedBean.appointment}"
+								target="#{doctorReqAppointmentManagedBean.approve}"
 								value="#{appointment}" />
 						</p:commandButton>
-					</p:column>
-					<p:column headerText="">
-						
 
 						<p:commandButton immediate="true" value="Reject"
 							styleClass="rounded-button ui-button-danger" icon="pi pi-times"
 							update="table growl"
 							action="#{doctorReqAppointmentManagedBean.reject}">
-							<p:confirm header="Confirmation" message="Are you sure?"
+							<p:confirm header="Confirmation"
+								message="Are you sure you want to reject this appointment?"
 								icon="pi pi-exclamation-triangle" />
 
 							<f:setPropertyActionListener
@@ -76,21 +72,15 @@
 							<p:commandButton value="No" type="button"
 								styleClass="ui-confirmdialog-no" icon="pi pi-times" />
 						</p:confirmDialog>
+
 					</p:column>
-
 				</p:dataTable>
-
-				<p:dialog header="Edit Appointments" id="updateDialog"
-					widgetVar="EditDialog" modal="true">
-					<h:form id="dialogForm">
-
-					
-					</h:form>
-
-				</p:dialog>
 			</div>
-
 		</ui:define>
 	</ui:composition>
-</h:body>
+
+<body>
+
+</body>
+
 </html>
