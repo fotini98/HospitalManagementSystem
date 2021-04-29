@@ -93,19 +93,19 @@
 							styleClass="rounded-button ui-button-secondary"
 							icon="pi pi-check" update="table growl"
 							action="#{doctorAppointmentManagedBean.markAsCompleted}"
-							disabled="#{appointment.status eq 'Completed'}">
+							disabled="#{appointment.status eq 'Completed' or appointment.status eq 'Rejected'}">
 							<f:setPropertyActionListener
 								target="#{doctorAppointmentManagedBean.appointment}"
 								value="#{appointment}" />
 						</p:commandButton>
 					</p:column>
 					<p:column headerText="">
-					
-					<p:commandButton icon="pi pi-pencil" value="Prescription"
-							update="updateDialog" process="@this"
+
+						<p:commandButton icon="pi pi-pencil" value="Prescription"
+							update="prescriptionDialog" process="@this"
 							styleClass="rounded-button ui-button-sucess"
-							oncomplete="PF('EditDialog').show();"
-							disabled="#{appointment.status eq 'Completed'}">
+							oncomplete="PF('PrescriptionDialog').show();"
+							disabled="#{appointment.status eq 'Completed' or appointment.status eq 'Rejected'}">
 
 							<f:setPropertyActionListener
 								target="#{doctorAppointmentManagedBean.appointment}"
@@ -122,7 +122,7 @@
 							update="updateDialog" process="@this"
 							styleClass="rounded-button ui-button-sucess"
 							oncomplete="PF('EditDialog').show();"
-							disabled="#{appointment.status eq 'Completed'}">
+							disabled="#{appointment.status eq 'Completed' or appointment.status eq 'Rejected'}">
 
 							<f:setPropertyActionListener
 								target="#{doctorAppointmentManagedBean.appointment}"
@@ -155,31 +155,23 @@
 					</p:column>
 
 				</p:dataTable>
-				
-							<p:dialog header="Add Prescription" id="prescriptionDialog"
+
+				<p:dialog header="Add Prescription" id="prescriptionDialog"
 					widgetVar="PrescriptionDialog" modal="true">
-					<h:form>
-
-						<h:panelGrid columns="2">
-
-							<p:outputLabel value="Patient" />
-						
-							<p:outputLabel for="date" value="Time" />
-							<p:datePicker id="date"
-								value="#{doctorAppointmentManagedBean.appointment.date}"
-								showTime="true" locale="de" pattern="dd.MM.yyyy" />
-
-							<br></br>
-							<br></br>
-
-							<p:commandButton process="prescriptionDialog" update="table growl"
+						<h:form id="form">
+						<p:panelGrid id="myPanelGrid" columns="1">
+						</p:panelGrid>
+							<p:commandButton value="Add Panel"
+								actionListener="#{doctorAppointmentManagedBean.addMedicinePanel}"
+								update="myPanelGrid" />
+								
+								<p:commandButton process="prescriptionDialog" update="table growl"
 								value="Save"
 								actionListener="#{doctorAppointmentManagedBean.update}"
 								oncomplete="PF('PrescriptionDialog').hide();">
 
 							</p:commandButton>
-						</h:panelGrid>
-					</h:form>
+						</h:form>
 
 				</p:dialog>
 

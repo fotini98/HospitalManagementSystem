@@ -10,11 +10,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
+import com.ikubinfo.primefaces.model.Department;
+import com.ikubinfo.primefaces.model.Medicine;
 import com.ikubinfo.primefaces.model.Prescription;
 import com.ikubinfo.primefaces.model.PrescriptionMedicine;
 import com.ikubinfo.primefaces.repository.mapper.PrescriptionRowMapper;
@@ -34,7 +37,7 @@ public class PrescriptionRepository {
 			+ "	prescription_id, medicine_id, dose, duartion)\r\n"
 			+ "	VALUES (:prescription_id, :medicine_id, :dose, :duartion);";
 	
-	
+	private static final String GET_ALL_MEDICINES="SELECT medicine_id, name, strength FROM public.medicine";
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	private SimpleJdbcInsert insertPrescriptionQuery;
 	private JdbcTemplate jdbcTemplate;
@@ -79,6 +82,15 @@ public class PrescriptionRepository {
         parameters.put("appointment_id", parameters);		
 		int perscriptionId = (int) insertPrescriptionQuery.executeAndReturnKey(parameters);
 		return perscriptionId;
+	}
+	
+	public List<Medicine> getAllMedicines(){
+		RowMapper<Medicine> rowMapper = (rs, rowNum) -> {
+			Medicine medicine = new Medicine(rs.getInt("medicine_id"), rs.getString("name"),
+					rs.getInt("strength"));
+			return medicine;
+		};
+		return namedParameterJdbcTemplate.query(GET_ALL_MEDICINES, rowMapper);
 	}
 
 	

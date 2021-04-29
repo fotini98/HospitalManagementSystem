@@ -25,19 +25,21 @@ public class DoctorReqAppointmentManagedBean {
 		@ManagedProperty(value="#{messages}")
 		private Messages message;
 		
+		@ManagedProperty(value = "#{loginBean}")
+		private LoginBean loginBean;
 		
 		@PostConstruct
 		public void init() {
-			doctor=new Employee();
+			doctor= loginBean.getEmployee();
 			appointment=new Appointment();
-			appointments=service.getDoctorReqAppointment(5);
+			appointments=service.getDoctorReqAppointment(doctor.getEmployeeId());
 			
 		}
 		
 		public void approve() {
-			appointment.setDoctorId(5);
+			appointment.setDoctorId(doctor.getEmployeeId());
 			if(service.approve(appointment)) {
-				appointments=service.getDoctorReqAppointment(5);
+				appointments=service.getDoctorReqAppointment(doctor.getEmployeeId());
 				message.showInfoMessage("Appointment was Approved!");
 			}else {
 				message.showFatalMessage("Something went wrong!!");
@@ -46,9 +48,9 @@ public class DoctorReqAppointmentManagedBean {
 		}
 		public void reject() {
 			System.out.println("method invoked");
-			appointment.setDoctorId(5);
+			appointment.setDoctorId(doctor.getEmployeeId());
 			if(service.reject(appointment)) {
-				appointments=service.getDoctorReqAppointment(5);
+				appointments=service.getDoctorReqAppointment(doctor.getEmployeeId());
 				message.showWarningMessage("Appointment was Rejected!!");
 			}else {
 				message.showFatalMessage("Something went wrong!!");
@@ -104,6 +106,14 @@ public class DoctorReqAppointmentManagedBean {
 
 		public void setMessage(Messages message) {
 			this.message = message;
+		}
+
+		public LoginBean getLoginBean() {
+			return loginBean;
+		}
+
+		public void setLoginBean(LoginBean loginBean) {
+			this.loginBean = loginBean;
 		}
 		
 		

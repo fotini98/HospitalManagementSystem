@@ -11,38 +11,33 @@
 		<div class="main">
 	<p:growl id="growl"></p:growl>
 
-	<p:commandButton style="float:right;" value="Add Doctor"
+	<p:commandButton style="float:right;" value="Add Nurse"
 		update="addDialog" process="@this"
 		styleClass="rounded-button ui-button-success"
 		oncomplete="PF('AddDialog').show();">
-
 	</p:commandButton>
 
-
-	<p:dialog header="Add Doctor" id="addDialog" widgetVar="AddDialog"
+	<p:dialog header="Add Nurse" id="addDialog" widgetVar="AddDialog"
 		modal="true">
 		<h:form id="addForm">
 
 			<h:panelGrid columns="3">
 
-
 				<p:outputLabel for="full_name" value="Full Name"></p:outputLabel>
 				<p:inputText id="full_name" required="true"
-					value="#{doctorManagedBean.doctor.fullName}"></p:inputText>
+					value="#{nurseManagedBean.nurse.fullName}"></p:inputText>
 				<br></br>
 				<br></br>
 
 				<p:outputLabel for="birth_date" value="Birth Date" />
 				<p:datePicker id="birth_date"
-					value="#{doctorManagedBean.doctor.birthDate}" monthNavigator="true"
+					value="#{nurseManagedBean.nurse.birthDate}" monthNavigator="true"
 					yearNavigator="true" showWeek="true" yearRange="1930:2021" />
-
 				<br></br>
 				<br></br>
-
 				<p:outputLabel for="email" value="Email    "></p:outputLabel>
 				<p:inputText id="email" required="true"
-					value="#{doctorManagedBean.doctor.email}">
+					value="#{nurseManagedBean.nurse.email}">
 					<f:validateRegex pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$" />
 
 				</p:inputText>
@@ -51,13 +46,13 @@
 
 				<p:outputLabel for="address" value="Address"></p:outputLabel>
 				<p:inputText id="address" required="true"
-					value="#{doctorManagedBean.doctor.address}"></p:inputText>
+					value="#{nurseManagedBean.nurse.address}"></p:inputText>
 				<br></br>
 				<br></br>
 
 				<p:outputLabel for="phone" value="Phone"></p:outputLabel>
 				<p:inputText id="phone" required="true"
-					value="#{doctorManagedBean.doctor.phone}"></p:inputText>
+					value="#{nurseManagedBean.nurse.phone}"></p:inputText>
 				<br></br>
 				<br></br>
 
@@ -66,7 +61,7 @@
 
 				<p:outputLabel value="Gender" />
 				<p:selectOneMenu id="gender"
-					value="#{doctorManagedBean.doctor.gender}" label="Select">
+					value="#{nurseManagedBean.nurse.gender}" label="Select">
 					<f:selectItem itemLabel="Select One" itemValue="" />
 					<f:selectItems value="#{gender.ALL_ENUM_VALUES}" />
 				</p:selectOneMenu>
@@ -75,25 +70,21 @@
 
 				<p:outputLabel value="Department" />
 				<p:selectOneMenu id="lable"
-					value="#{doctorManagedBean.department.name}" label="Select ">
+					value="#{nurseManagedBean.department.name}" label="Select ">
 
 
 					<f:selectItem itemLabel="Select One" itemValue="" />
-					<f:selectItems value="#{doctorManagedBean.departments}" />
+					<f:selectItems value="#{nurseManagedBean.departments}" />
 
 				</p:selectOneMenu>
 				<br></br>
 				<br></br>
 
-
-
 				<p:commandButton process="addDialog" update="table growl"
-					value="Save" actionListener="#{doctorManagedBean.save}"
+					value="Save" actionListener="#{nurseManagedBean.save}"
 					oncomplete="PF('AddDialog').hide();" icon="pi pi-check">
 
 				</p:commandButton>
-
-
 
 			</h:panelGrid>
 		</h:form>
@@ -101,47 +92,42 @@
 	</p:dialog>
 
 
-
-
-	<center></center>
-	<p:dataTable id="table" value="#{doctorManagedBean.doctors}"
-		var="doctor">
+	<p:dataTable id="table" value="#{nurseManagedBean.nurses}"
+		var="nurse">
 		<f:facet name="header">
 			<div class="p-d-flex p-ai-center p-jc-between">
-				<span>List of Doctors</span>
+				<span>List of Nurses</span>
 			</div>
 		</f:facet>
 
 
-
-
 		<p:column headerText="Full Name">
-			<p:outputLabel value="#{doctor.fullName}"></p:outputLabel>
+			<p:outputLabel value="#{nurse.fullName}"></p:outputLabel>
 		</p:column>
 		<p:column headerText="Birth Date">
-			<p:outputLabel value="#{doctor.birthDate}"></p:outputLabel>
+			<p:outputLabel value="#{nurse.birthDate}"></p:outputLabel>
 		</p:column>
 		<p:column headerText="Age">
-			<p:outputLabel value="#{doctor.age}"></p:outputLabel>
+			<p:outputLabel value="#{nurse.age}"></p:outputLabel>
 		</p:column>
 
 		<p:column headerText="Email">
-			<p:outputLabel value="#{doctor.email}"></p:outputLabel>
+			<p:outputLabel value="#{nurse.email}"></p:outputLabel>
 		</p:column>
 		<p:column headerText="Address">
-			<p:outputLabel value="#{doctor.address}"></p:outputLabel>
+			<p:outputLabel value="#{nurse.address}"></p:outputLabel>
 		</p:column>
 		<p:column headerText="phone">
-			<p:outputLabel value="#{doctor.phone}"></p:outputLabel>
+			<p:outputLabel value="#{nurse.phone}"></p:outputLabel>
 		</p:column>
 
 
 		<p:column headerText="Created By">
-			<p:outputLabel value="#{doctor.createdBy}"></p:outputLabel>
+			<p:outputLabel value="#{nurse.createdBy}"></p:outputLabel>
 		</p:column>
 
 		<p:column headerText="Department">
-			<p:outputLabel value="#{doctor.department}"></p:outputLabel>
+			<p:outputLabel value="#{nurse.department}"></p:outputLabel>
 		</p:column>
 
 
@@ -152,24 +138,21 @@
 				styleClass="rounded-button ui-button-sucess"
 				oncomplete="PF('EditDialog').show();">
 
-				<f:setPropertyActionListener target="#{doctorManagedBean.doctor}"
-					value="#{doctor}" />
+				<f:setPropertyActionListener target="#{nurseManagedBean.nurse}"
+					value="#{nurse}" />
 				<f:setPropertyActionListener
-					target="#{doctorManagedBean.department}"
-					value="#{doctor.department}" />
-
+					target="#{nurseManagedBean.department}"
+					value="#{nurse.department}" />
 
 			</p:commandButton>
-
-
 			<p:commandButton immediate="true" value="Delete"
 				styleClass="rounded-button ui-button-danger" icon="pi pi-trash"
-				update="table growl" action="#{doctorManagedBean.delete}">
+				update="table growl" action="#{nurseManagedBean.delete}">
 				<p:confirm header="Confirmation" message="Are you sure?"
 					icon="pi pi-exclamation-triangle" />
 
-				<f:setPropertyActionListener target="#{doctorManagedBean.doctor}"
-					value="#{doctor}" />
+				<f:setPropertyActionListener target="#{nurseManagedBean.nurse}"
+					value="#{nurse}" />
 			</p:commandButton>
 
 			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
@@ -178,29 +161,28 @@
 				<p:commandButton value="No" type="button"
 					styleClass="ui-confirmdialog-no" icon="pi pi-times" />
 			</p:confirmDialog>
-
 		</p:column>
 	</p:dataTable>
 
-	<p:dialog header="Edit Doctor" id="updateDialog" widgetVar="EditDialog"
+	<p:dialog header="Edit Nurse" id="updateDialog" widgetVar="EditDialog"
 		modal="true">
 		<h:form id="dialogForm">
 
 			<h:panelGrid columns="3">
 				<p:outputLabel for="personid" value="Person id"></p:outputLabel>
 				<p:outputLabel id="personid" required="true"
-					value="#{doctorManagedBean.doctor.personId}"></p:outputLabel>
+					value="#{nurseManagedBean.nurse.personId}"></p:outputLabel>
 				<br></br>
 				<br></br>
 				<p:outputLabel for="full_name" value="Full Name"></p:outputLabel>
 				<p:inputText id="full_name" required="true"
-					value="#{doctorManagedBean.doctor.fullName}"></p:inputText>
+					value="#{nurseManagedBean.nurse.fullName}"></p:inputText>
 				<br></br>
 				<br></br>
 
 				<p:outputLabel for="birth_date" value="Birth Date" />
 				<p:datePicker id="birth_date"
-					value="#{doctorManagedBean.doctor.birthDate}" monthNavigator="true"
+					value="#{nurseManagedBean.nurse.birthDate}" monthNavigator="true"
 					yearNavigator="true" showWeek="true" yearRange="1930:2021" />
 
 				<br></br>
@@ -208,7 +190,7 @@
 
 				<p:outputLabel for="email" value="Email    "></p:outputLabel>
 				<p:inputText id="email" required="true"
-					value="#{doctorManagedBean.doctor.email}">
+					value="#{nurseManagedBean.nurse.email}">
 					<f:validateRegex pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$" />
 
 				</p:inputText>
@@ -217,41 +199,38 @@
 
 				<p:outputLabel for="address" value="Address"></p:outputLabel>
 				<p:inputText id="address" required="true"
-					value="#{doctorManagedBean.doctor.address}"></p:inputText>
+					value="#{nurseManagedBean.nurse.address}"></p:inputText>
 				<br></br>
 				<br></br>
 
 				<p:outputLabel for="phone" value="Phone"></p:outputLabel>
 				<p:inputText id="phone" required="true"
-					value="#{doctorManagedBean.doctor.phone}"></p:inputText>
+					value="#{nurseManagedBean.nurse.phone}"></p:inputText>
 				<br></br>
 				<br></br>
 
 				<p:outputLabel value="Department" />
 				<p:selectOneMenu id="lable"
-					value="#{doctorManagedBean.department.name}" label="Select">
+					value="#{nurseManagedBean.department.name}" label="Select">
 
 
 					<f:selectItem itemLabel="Select One" itemValue="" />
-					<f:selectItems value="#{doctorManagedBean.departments}" />
+					<f:selectItems value="#{nurseManagedBean.departments}" />
 
 				</p:selectOneMenu>
 				<br></br>
 				<br></br>
 
 				<p:commandButton process="updateDialog" update="table growl"
-					value="Save" actionListener="#{doctorManagedBean.update}"
+					value="Save" actionListener="#{nurseManagedBean.update}"
 					oncomplete="PF('EditDialog').hide();">
-
 				</p:commandButton>
-
-
 
 			</h:panelGrid>
 		</h:form>
 	</p:dialog>
 	</div>
-	
+
 		</ui:define>
 	</ui:composition>
 	

@@ -7,6 +7,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.ikubinfo.primefaces.model.Prescription;
 import com.ikubinfo.primefaces.service.PrescriptionService;
 import com.ikubinfo.primefaces.util.Messages;
@@ -24,11 +26,14 @@ public class DoctorPrescriptionManagedBean {
 	@ManagedProperty(value = "#{messages}")
 	private Messages messages;
 	
+	@ManagedProperty(value = "#{loginBean}")
+	private LoginBean loginBean;
+	
 	@PostConstruct
 	public void init() {
 		
 		prescription=new Prescription();
-		prescriptions=prescriptionService.getAllDocPrescriptions(5);
+		prescriptions=prescriptionService.getAllDocPrescriptions(loginBean.getEmployee().getEmployeeId());
 		
 	}
 	
@@ -69,6 +74,14 @@ public class DoctorPrescriptionManagedBean {
 
 	public void setMessages(Messages messages) {
 		this.messages = messages;
+	}
+
+	public LoginBean getLoginBean() {
+		return loginBean;
+	}
+
+	public void setLoginBean(LoginBean loginBean) {
+		this.loginBean = loginBean;
 	}
 	
 	

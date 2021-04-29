@@ -184,16 +184,15 @@ font-size: 30%;}
 <div class="topnav" id="myTopnav">
   <a href="#home" class="active">Home</a>
   <div class="dropdown">
-    <button class="dropbtn">User 
+    <button class="dropbtn">#{loginBean.employee.fullName}
       <i class="fa fa-caret-down"></i>
     </button>
     <div class="dropdown-content">
-      <a href="#">Link 1</a>
-      <a href="#">Link 2</a>
-      <a href="#">Link 3</a>
+     <p:commandButton id="logoutButton" action="#{loginBean.logout}" value="Log out" ajax="true" style="width:100%"></p:commandButton>
+  <!--     <a href="#">Link 2</a>
+      <a href="#">Link 3</a> -->
     </div>
   </div> 
-  <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
 </div>
 
 

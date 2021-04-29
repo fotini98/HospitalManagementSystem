@@ -19,19 +19,20 @@ import com.ikubinfo.primefaces.util.Messages;
 @ViewScoped
 public class DoctorManagedBean implements Serializable{
 	
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private Employee doctor;
 	private List<Employee> doctors;
 	private List<Department> departments; 
+
 	
 	private Department department;
 	
 	@ManagedProperty(value = "#{employeeService}")
 	private EmployeeService doctorService;
+	
+	@ManagedProperty(value = "#{loginBean}")
+	private LoginBean loginBean;
+	
 	
 	@ManagedProperty(value = "#{messages}")
 	private Messages messages;
@@ -49,6 +50,8 @@ public class DoctorManagedBean implements Serializable{
 	public void save() {
 		doctor.setDepartment(department);
 		doctor.setRole(new Role(0,"Doctor"));
+		doctor.setCreatedBy(loginBean.getEmployee().getFullName());
+		doctor.setModifiedBy(loginBean.getEmployee().getFullName());
 		if(doctorService.saveEmployee(doctor)) {
 			doctors = doctorService.getAllEmployees("Doctor");
 			doctor=new Employee();
@@ -60,6 +63,7 @@ public class DoctorManagedBean implements Serializable{
 	
 	public void delete() {
 		doctor.setRole(new Role(0,"Doctor"));
+        doctor.setModifiedBy(loginBean.getEmployee().getFullName());
 		System.out.println(doctor );
 		if(doctorService.deleteEmployee(doctor)) {
 			doctors = doctorService.getAllEmployees("Doctor");
@@ -72,6 +76,7 @@ public class DoctorManagedBean implements Serializable{
 	
 	public void update() {
 		doctor.setDepartment(department);
+		 doctor.setModifiedBy(loginBean.getEmployee().getFullName());
 		System.out.println(doctor +" department "+department.getName());
 		if(doctorService.updateEmployee(doctor)) {
 			doctors = doctorService.getAllEmployees("Doctor");
@@ -129,6 +134,18 @@ public class DoctorManagedBean implements Serializable{
 
 	public void setDepartment(Department department) {
 		this.department = department;
+	}
+
+	public LoginBean getLoginBean() {
+		return loginBean;
+	}
+
+	public void setLoginBean(LoginBean loginBean) {
+		this.loginBean = loginBean;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	
 	

@@ -1,9 +1,23 @@
 package com.ikubinfo.primefaces.model;
 
-public class Medicine {
+import java.io.Serializable;
+
+public class Medicine implements Serializable{
 	private int medicineId;
 	private String name;
 	private int strengeth;
+	
+	
+	
+	public Medicine() {
+		super();
+	}
+	public Medicine(int medicineId, String name, int strengeth) {
+		super();
+		this.medicineId = medicineId;
+		this.name = name;
+		this.strengeth = strengeth;
+	}
 	public int getMedicineId() {
 		return medicineId;
 	}
@@ -21,6 +35,10 @@ public class Medicine {
 	}
 	public void setStrengeth(int strengeth) {
 		this.strengeth = strengeth;
+	}
+	@Override
+	public String toString() {
+		return name;
 	}
 	
 	

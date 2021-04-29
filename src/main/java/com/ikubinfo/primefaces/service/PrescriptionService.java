@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ikubinfo.primefaces.model.Medicine;
 import com.ikubinfo.primefaces.model.Prescription;
 import com.ikubinfo.primefaces.model.PrescriptionMedicine;
 import com.ikubinfo.primefaces.repository.PrescriptionRepository;
@@ -25,12 +26,17 @@ public class PrescriptionService {
 	}
 	@Transactional
 	public void insertPrescription(List<PrescriptionMedicine> prescriptionMedicines, int appointmentId) {
-		dao.addPrescription(appointmentId);	
+	     int prescriptionId=dao.addPrescription(appointmentId);	
+	    
 		for(PrescriptionMedicine prescriptionMedicine: prescriptionMedicines ) {
+			prescriptionMedicine.setPrescriptionId(prescriptionId);
 			 dao.insertPrescriptionMedicine(prescriptionMedicine);
 		}
 		//return type boolean
 		 
+	}
+	public List<Medicine> getAllMedicines(){
+		return dao.getAllMedicines();
 	}
 
 }
