@@ -39,6 +39,13 @@ public class Appointment {
 		this.status= status;
 
 	}
+	
+	
+	public Appointment(long appointmentId, String status) {
+		super();
+		this.appointmentId = appointmentId;
+		this.status = status;
+	}
 	public long getPatientId() {
 		return patientId;
 	}

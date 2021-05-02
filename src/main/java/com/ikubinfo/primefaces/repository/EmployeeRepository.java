@@ -148,8 +148,8 @@ public class EmployeeRepository {
 		namedParameters.addValue("password", employee.getPassword());
 		namedParameters.addValue("modifiedBy", employee.getModifiedBy());
 		namedParameters.addValue("personId", employee.getPersonId());
-		int deletedPerson = this.namedParameterJdbcTemplate.update(UPDATE_PERSON_QUERY, namedParameters);
-		return deletedPerson > 0;
+		int updatedPerson = this.namedParameterJdbcTemplate.update(UPDATE_PERSON_QUERY, namedParameters);
+		return updatedPerson > 0;
 	}
 
 }

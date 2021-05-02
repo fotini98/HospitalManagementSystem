@@ -64,7 +64,7 @@
 
 				</p:dialog>
 
-				<center></center>
+				
 
 
 				<p:dataTable value="#{doctorAppointmentManagedBean.appointments}"
@@ -101,20 +101,16 @@
 					</p:column>
 					<p:column headerText="">
 
-						<p:commandButton icon="pi pi-pencil" value="Prescription"
-							update="prescriptionDialog" process="@this"
+						<p:button icon="pi pi-pencil" value="Prescription"
+							 process="@this"
 							styleClass="rounded-button ui-button-sucess"
-							oncomplete="PF('PrescriptionDialog').show();"
+							outcome="prescription.xhtml?id=#{appointment.appointmentId}&amp;patient=#{appointment.patient.fullName}"
+							action="prescription.xhtml?faces-redirect=true"
 							disabled="#{appointment.status eq 'Completed' or appointment.status eq 'Rejected'}">
 
-							<f:setPropertyActionListener
-								target="#{doctorAppointmentManagedBean.appointment}"
-								value="#{appointment}" />
-							<f:setPropertyActionListener
-								target="#{doctorAppointmentManagedBean.patient.fullName}"
-								value="#{appointment.patient.fullName}" />
+				
 
-						</p:commandButton>
+						</p:button>
 
 					</p:column>
 					<p:column headerText="">
@@ -158,20 +154,20 @@
 
 				<p:dialog header="Add Prescription" id="prescriptionDialog"
 					widgetVar="PrescriptionDialog" modal="true">
-						<h:form id="form">
+					<h:form id="form">
 						<p:panelGrid id="myPanelGrid" columns="1">
 						</p:panelGrid>
-							<p:commandButton value="Add Panel"
-								actionListener="#{doctorAppointmentManagedBean.addMedicinePanel}"
-								update="myPanelGrid" />
-								
-								<p:commandButton process="prescriptionDialog" update="table growl"
-								value="Save"
-								actionListener="#{doctorAppointmentManagedBean.update}"
-								oncomplete="PF('PrescriptionDialog').hide();">
+						<p:commandButton value="Add Panel"
+							actionListener="#{doctorAppointmentManagedBean.addMedicinePanel}"
+							update="myPanelGrid" />
 
-							</p:commandButton>
-						</h:form>
+						<p:commandButton process="prescriptionDialog" update="table growl"
+							value="Save"
+							actionListener="#{doctorAppointmentManagedBean.update}"
+							oncomplete="PF('PrescriptionDialog').hide();">
+
+						</p:commandButton>
+					</h:form>
 
 				</p:dialog>
 

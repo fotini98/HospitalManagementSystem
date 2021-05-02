@@ -38,7 +38,7 @@ public class Medicine implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return name;
+		return "Medicine [medicineId=" + medicineId + ", name=" + name + ", strengeth=" + strengeth + "]";
 	}
 	
 	

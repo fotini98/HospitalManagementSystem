@@ -8,253 +8,260 @@
 <h:body>
 <ui:composition template="/admin-template/template.xhtml">
 		<ui:define name="content">
-		<div class="main">
-	<p:growl id="growl"></p:growl>
+			<div class="main">
+				<p:growl id="growl"></p:growl>
 
-	<p:commandButton style="float:right;" value="Add Receptionist"
-		update="addDialog" process="@this"
-		styleClass="rounded-button ui-button-success"
-		oncomplete="PF('AddDialog').show();">
-
-	</p:commandButton>
-
-
-	<p:dialog header="Add Receptionist" id="addDialog" widgetVar="AddDialog"
-		modal="true">
-		<h:form id="addForm">
-
-			<h:panelGrid columns="3">
-
-
-				<p:outputLabel for="full_name" value="Full Name"></p:outputLabel>
-				<p:inputText id="full_name" required="true"
-					value="#{receptionistManagedBean.receptionist.fullName}"></p:inputText>
-				<br></br>
-				<br></br>
-
-				<p:outputLabel for="birth_date" value="Birth Date" />
-				<p:datePicker id="birth_date"
-					value="#{receptionistManagedBean.receptionist.birthDate}" monthNavigator="true"
-					yearNavigator="true" showWeek="true" yearRange="1930:2021" />
-
-				<br></br>
-				<br></br>
-
-				<p:outputLabel for="email" value="Email    "></p:outputLabel>
-				<p:inputText id="email" required="true"
-					value="#{receptionistManagedBean.receptionist.email}">
-					<f:validateRegex pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$" />
-
-				</p:inputText>
-				<br></br>
-				<br></br>
-
-				<p:outputLabel for="address" value="Address"></p:outputLabel>
-				<p:inputText id="address" required="true"
-					value="#{receptionistManagedBean.receptionist.address}"></p:inputText>
-				<br></br>
-				<br></br>
-
-				<p:outputLabel for="phone" value="Phone"></p:outputLabel>
-				<p:inputText id="phone" required="true"
-					value="#{receptionistManagedBean.receptionist.phone}"></p:inputText>
-				<br></br>
-				<br></br>
-
-				<p:importEnum type="com.ikubinfo.primefaces.model.Gender"
-					var="gender" allSuffix="ALL_ENUM_VALUES" />
-
-				<p:outputLabel value="Gender" />
-				<p:selectOneMenu id="gender"
-					value="#{receptionistManagedBean.receptionist.gender}" label="Select">
-					<f:selectItem itemLabel="Select One" itemValue="" />
-					<f:selectItems value="#{gender.ALL_ENUM_VALUES}" />
-				</p:selectOneMenu>
-				<br></br>
-				<br></br>
-
-				<p:outputLabel value="Department" />
-				<p:selectOneMenu id="lable"
-					value="#{receptionistManagedBean.department.name}" label="Select ">
-
-
-					<f:selectItem itemLabel="Select One" itemValue="" />
-					<f:selectItems value="#{receptionistManagedBean.departments}" />
-
-				</p:selectOneMenu>
-				<br></br>
-				<br></br>
-
-
-
-				<p:commandButton process="addDialog" update="table growl"
-					value="Save" actionListener="#{receptionistManagedBean.save}"
-					oncomplete="PF('AddDialog').hide();" icon="pi pi-check">
+				<p:commandButton style="float:right;" value="Add Receptionist"
+					update="addDialog" process="@this"
+					styleClass="rounded-button ui-button-success"
+					oncomplete="PF('AddDialog').show();">
 
 				</p:commandButton>
 
 
+				<p:dialog header="Add Receptionist" id="addDialog"
+					widgetVar="AddDialog" modal="true">
+					<h:form id="addForm">
 
-			</h:panelGrid>
-		</h:form>
-
-	</p:dialog>
-
-
+						<h:panelGrid columns="3">
 
 
-	<center></center>
-	<p:dataTable id="table" value="#{receptionistManagedBean.receptionists}"
-		var="receptionist">
-		<f:facet name="header">
-			<div class="p-d-flex p-ai-center p-jc-between">
-				<span>List of Receptionists</span>
+							<p:outputLabel for="full_name" value="Full Name"></p:outputLabel>
+							<p:inputText id="full_name" 
+								value="#{receptionistManagedBean.receptionist.fullName}"></p:inputText>
+							<br></br>
+							<br></br>
+
+							<p:outputLabel for="birth_date" value="Birth Date" />
+							<p:datePicker id="birth_date"
+								value="#{receptionistManagedBean.receptionist.birthDate}"
+								monthNavigator="true" yearNavigator="true" showWeek="true"
+								yearRange="1930:2021" />
+
+							<br></br>
+							<br></br>
+
+							<p:outputLabel for="email" value="Email    "></p:outputLabel>
+							<p:inputText id="email" 
+								value="#{receptionistManagedBean.receptionist.email}">
+								<f:validateRegex pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$" />
+
+							</p:inputText>
+							<br></br>
+							<br></br>
+
+							<p:outputLabel for="address" value="Address"></p:outputLabel>
+							<p:inputText id="address" 
+								value="#{receptionistManagedBean.receptionist.address}"></p:inputText>
+							<br></br>
+							<br></br>
+
+							<p:outputLabel for="phone" value="Phone"></p:outputLabel>
+							<p:inputText id="phone" 
+								value="#{receptionistManagedBean.receptionist.phone}"></p:inputText>
+							<br></br>
+							<br></br>
+
+							<p:importEnum type="com.ikubinfo.primefaces.model.Gender"
+								var="gender" allSuffix="ALL_ENUM_VALUES" />
+
+							<p:outputLabel value="Gender" />
+							<p:selectOneMenu id="gender"
+								value="#{receptionistManagedBean.receptionist.gender}"
+								label="Select">
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItems value="#{gender.ALL_ENUM_VALUES}" />
+							</p:selectOneMenu>
+							<br></br>
+							<br></br>
+
+							<p:outputLabel value="Department" />
+							<p:selectOneMenu id="lable"
+								value="#{receptionistManagedBean.department.name}"
+								label="Select ">
+
+
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItems value="#{receptionistManagedBean.departments}" />
+
+							</p:selectOneMenu>
+							<br></br>
+							<br></br>
+
+
+
+							<p:commandButton process="addDialog" update="table growl"
+								value="Save" actionListener="#{receptionistManagedBean.save}"
+								oncomplete="PF('AddDialog').hide();" icon="pi pi-check">
+
+							</p:commandButton>
+
+
+
+						</h:panelGrid>
+					</h:form>
+
+				</p:dialog>
+
+
+
+
+				<center></center>
+				<p:dataTable id="table"
+					value="#{receptionistManagedBean.receptionists}" var="receptionist">
+					<f:facet name="header">
+						<div class="p-d-flex p-ai-center p-jc-between">
+							<span>List of Receptionists</span>
+						</div>
+					</f:facet>
+
+
+
+
+					<p:column headerText="Full Name">
+						<p:outputLabel value="#{receptionist.fullName}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="Birth Date">
+						<p:outputLabel value="#{receptionist.birthDate}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="Age">
+						<p:outputLabel value="#{receptionist.age}"></p:outputLabel>
+					</p:column>
+
+					<p:column headerText="Email">
+						<p:outputLabel value="#{receptionist.email}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="Address">
+						<p:outputLabel value="#{receptionist.address}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="phone">
+						<p:outputLabel value="#{receptionist.phone}"></p:outputLabel>
+					</p:column>
+
+
+					<p:column headerText="Created By">
+						<p:outputLabel value="#{receptionist.createdBy}"></p:outputLabel>
+					</p:column>
+
+					<p:column headerText="Department">
+						<p:outputLabel value="#{receptionist.department}"></p:outputLabel>
+					</p:column>
+
+
+					<p:column headerText="Actions">
+
+						<p:commandButton icon="pi pi-pencil" value="Edit"
+							update="updateDialog" process="@this"
+							styleClass="rounded-button ui-button-sucess"
+							oncomplete="PF('EditDialog').show();">
+
+							<f:setPropertyActionListener
+								target="#{receptionistManagedBean.receptionist}"
+								value="#{receptionist}" />
+							<f:setPropertyActionListener
+								target="#{receptionistManagedBean.department}"
+								value="#{receptionist.department}" />
+
+
+						</p:commandButton>
+
+
+						<p:commandButton immediate="true" value="Delete"
+							styleClass="rounded-button ui-button-danger" icon="pi pi-trash"
+							update="table growl" action="#{receptionistManagedBean.delete}">
+							<p:confirm header="Confirmation" message="Are you sure?"
+								icon="pi pi-exclamation-triangle" />
+
+							<f:setPropertyActionListener
+								target="#{receptionistManagedBean.receptionist}"
+								value="#{receptionist}" />
+						</p:commandButton>
+
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+							<p:commandButton value="Yes" type="button"
+								styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+							<p:commandButton value="No" type="button"
+								styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+						</p:confirmDialog>
+
+					</p:column>
+				</p:dataTable>
+
+				<p:dialog header="Edit Receptionist" id="updateDialog"
+					widgetVar="EditDialog" modal="true">
+					<h:form id="dialogForm">
+
+						<h:panelGrid columns="3">
+							<p:outputLabel for="personid" value="Person id"></p:outputLabel>
+							<p:outputLabel id="personid" 
+								value="#{receptionistManagedBean.receptionist.personId}"></p:outputLabel>
+							<br></br>
+							<br></br>
+							<p:outputLabel for="full_name" value="Full Name"></p:outputLabel>
+							<p:inputText id="full_name" 
+								value="#{receptionistManagedBean.receptionist.fullName}"></p:inputText>
+							<br></br>
+							<br></br>
+
+							<p:outputLabel for="birth_date" value="Birth Date" />
+							<p:datePicker id="birth_date"
+								value="#{receptionistManagedBean.receptionist.birthDate}"
+								monthNavigator="true" yearNavigator="true" showWeek="true"
+								yearRange="1930:2021" />
+
+							<br></br>
+							<br></br>
+
+							<p:outputLabel for="email" value="Email    "></p:outputLabel>
+							<p:inputText id="email" 
+								value="#{receptionistManagedBean.receptionist.email}">
+								<f:validateRegex pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$" />
+
+							</p:inputText>
+							<br></br>
+							<br></br>
+
+							<p:outputLabel for="address" value="Address"></p:outputLabel>
+							<p:inputText id="address"
+								value="#{receptionistManagedBean.receptionist.address}"></p:inputText>
+							<br></br>
+							<br></br>
+
+							<p:outputLabel for="phone" value="Phone"></p:outputLabel>
+							<p:inputText id="phone" 
+								value="#{receptionistManagedBean.receptionist.phone}"></p:inputText>
+							<br></br>
+							<br></br>
+
+							<p:outputLabel value="Department" />
+							<p:selectOneMenu id="lable"
+								value="#{receptionistManagedBean.department.name}"
+								label="Select">
+
+
+								<f:selectItem itemLabel="Select One" itemValue="" />
+								<f:selectItems value="#{receptionistManagedBean.departments}" />
+
+							</p:selectOneMenu>
+							<br></br>
+							<br></br>
+
+							<p:commandButton process="updateDialog" update="table growl"
+								value="Save" actionListener="#{receptionistManagedBean.update}"
+								oncomplete="PF('EditDialog').hide();">
+
+							</p:commandButton>
+
+
+
+						</h:panelGrid>
+					</h:form>
+				</p:dialog>
 			</div>
-		</f:facet>
 
-
-
-
-		<p:column headerText="Full Name">
-			<p:outputLabel value="#{receptionist.fullName}"></p:outputLabel>
-		</p:column>
-		<p:column headerText="Birth Date">
-			<p:outputLabel value="#{receptionist.birthDate}"></p:outputLabel>
-		</p:column>
-		<p:column headerText="Age">
-			<p:outputLabel value="#{receptionist.age}"></p:outputLabel>
-		</p:column>
-
-		<p:column headerText="Email">
-			<p:outputLabel value="#{receptionist.email}"></p:outputLabel>
-		</p:column>
-		<p:column headerText="Address">
-			<p:outputLabel value="#{receptionist.address}"></p:outputLabel>
-		</p:column>
-		<p:column headerText="phone">
-			<p:outputLabel value="#{receptionist.phone}"></p:outputLabel>
-		</p:column>
-
-
-		<p:column headerText="Created By">
-			<p:outputLabel value="#{receptionist.createdBy}"></p:outputLabel>
-		</p:column>
-
-		<p:column headerText="Department">
-			<p:outputLabel value="#{receptionist.department}"></p:outputLabel>
-		</p:column>
-
-
-		<p:column headerText="Actions">
-
-			<p:commandButton icon="pi pi-pencil" value="Edit"
-				update="updateDialog" process="@this"
-				styleClass="rounded-button ui-button-sucess"
-				oncomplete="PF('EditDialog').show();">
-
-				<f:setPropertyActionListener target="#{receptionistManagedBean.receptionist}"
-					value="#{receptionist}" />
-				<f:setPropertyActionListener
-					target="#{receptionistManagedBean.department}"
-					value="#{receptionist.department}" />
-
-
-			</p:commandButton>
-
-
-			<p:commandButton immediate="true" value="Delete"
-				styleClass="rounded-button ui-button-danger" icon="pi pi-trash"
-				update="table growl" action="#{receptionistManagedBean.delete}">
-				<p:confirm header="Confirmation" message="Are you sure?"
-					icon="pi pi-exclamation-triangle" />
-
-				<f:setPropertyActionListener target="#{receptionistManagedBean.receptionist}"
-					value="#{receptionist}" />
-			</p:commandButton>
-
-			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-				<p:commandButton value="Yes" type="button"
-					styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
-				<p:commandButton value="No" type="button"
-					styleClass="ui-confirmdialog-no" icon="pi pi-times" />
-			</p:confirmDialog>
-
-		</p:column>
-	</p:dataTable>
-
-	<p:dialog header="Edit Receptionist" id="updateDialog" widgetVar="EditDialog"
-		modal="true">
-		<h:form id="dialogForm">
-
-			<h:panelGrid columns="3">
-				<p:outputLabel for="personid" value="Person id"></p:outputLabel>
-				<p:outputLabel id="personid" required="true"
-					value="#{receptionistManagedBean.receptionist.personId}"></p:outputLabel>
-				<br></br>
-				<br></br>
-				<p:outputLabel for="full_name" value="Full Name"></p:outputLabel>
-				<p:inputText id="full_name" required="true"
-					value="#{receptionistManagedBean.receptionist.fullName}"></p:inputText>
-				<br></br>
-				<br></br>
-
-				<p:outputLabel for="birth_date" value="Birth Date" />
-				<p:datePicker id="birth_date"
-					value="#{receptionistManagedBean.receptionist.birthDate}" monthNavigator="true"
-					yearNavigator="true" showWeek="true" yearRange="1930:2021" />
-
-				<br></br>
-				<br></br>
-
-				<p:outputLabel for="email" value="Email    "></p:outputLabel>
-				<p:inputText id="email" required="true"
-					value="#{receptionistManagedBean.receptionist.email}">
-					<f:validateRegex pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$" />
-
-				</p:inputText>
-				<br></br>
-				<br></br>
-
-				<p:outputLabel for="address" value="Address"></p:outputLabel>
-				<p:inputText id="address" required="true"
-					value="#{receptionistManagedBean.receptionist.address}"></p:inputText>
-				<br></br>
-				<br></br>
-
-				<p:outputLabel for="phone" value="Phone"></p:outputLabel>
-				<p:inputText id="phone" required="true"
-					value="#{receptionistManagedBean.receptionist.phone}"></p:inputText>
-				<br></br>
-				<br></br>
-
-				<p:outputLabel value="Department" />
-				<p:selectOneMenu id="lable"
-					value="#{receptionistManagedBean.department.name}" label="Select">
-
-
-					<f:selectItem itemLabel="Select One" itemValue="" />
-					<f:selectItems value="#{receptionistManagedBean.departments}" />
-
-				</p:selectOneMenu>
-				<br></br>
-				<br></br>
-
-				<p:commandButton process="updateDialog" update="table growl"
-					value="Save" actionListener="#{receptionistManagedBean.update}"
-					oncomplete="PF('EditDialog').hide();">
-
-				</p:commandButton>
-
-
-
-			</h:panelGrid>
-		</h:form>
-	</p:dialog>
-	</div>
-	
 		</ui:define>
 	</ui:composition>
-	
-	
+
+
 </h:body>
 </html>

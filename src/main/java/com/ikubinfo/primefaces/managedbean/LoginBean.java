@@ -1,6 +1,6 @@
 package com.ikubinfo.primefaces.managedbean;
+import java.io.IOException;
 import java.io.Serializable;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -39,15 +39,15 @@ public class LoginBean implements Serializable {
     				getSession(false);
             session.setAttribute("id", employee.getEmployeeId()); 
            if(employee.getRoleId()==1) {
-        	   return "adminDashboard.xhtml";
+        	   return "adminDashboard.xhtml?faces-redirect=true";
            }else if(employee.getRoleId()==2) {
-        	   return "doctorDashboard.xhtml";
+        	   return "doctorDashboard.xhtml?faces-redirect=true";
            }else if(employee.getRoleId()==3) {
-        	   return "receptionistDashboard.xhtml";
+        	   return "receptionistDashboard.xhtml?faces-redirect=true";
            }else if(employee.getRoleId()==4) {
-        	   return "patientDashboard.xhtml";
+        	   return "patientDashboard.xhtml?faces-redirect=true";
            }else if(employee.getRoleId()==5) {
-        	   return "nurseDashboard.xhtml";
+        	   return "nurseDashboard.xhtml?faces-redirect=true";
            }
         } else {
         	messages.showFatalMessage("Invalid Login! Please Try Again!");
@@ -64,8 +64,34 @@ public class LoginBean implements Serializable {
 				getExternalContext().
 				getSession(false);
       session.invalidate();
-      return "login";
+      return "login?faces-redirect=true";
    }
+    
+    public void loginValidation() throws IOException {
+    	if(employee!=null) {
+    		if(employee.getRoleId()==1) {
+         	 //  return "adminDashboard.xhtml?faces-redirect=true";
+    			 FacesContext.getCurrentInstance().getExternalContext().redirect("adminDashboard.xhtml");
+            }else if(employee.getRoleId()==2) {
+            	FacesContext.getCurrentInstance().getExternalContext().redirect("doctorDashboard.xhtml");
+         	 //  return "doctorDashboard.xhtml?faces-redirect=true";
+            }else if(employee.getRoleId()==3) {
+         	//   return "receptionistDashboard.xhtml?faces-redirect=true";
+            }else if(employee.getRoleId()==4) {
+         	//   return "patientDashboard.xhtml?faces-redirect=true";
+            }else if(employee.getRoleId()==5) {
+         	//   return "nurseDashboard.xhtml?faces-redirect=true";
+            }
+    	} 
+    		// return "login?faces-redirect=true";
+    	
+    }
+    
+    public void doctorValidation(){
+    	if(employee.getRoleId()==2) {
+    		
+    	}
+    }
     
 
  
@@ -77,7 +103,6 @@ public class LoginBean implements Serializable {
         this.password = password;
     }
     
- 
  
     public String getEmail() {
 		return email;

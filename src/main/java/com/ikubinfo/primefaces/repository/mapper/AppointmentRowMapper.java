@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.ikubinfo.primefaces.model.Appointment;
+import com.ikubinfo.primefaces.model.Employee;
 import com.ikubinfo.primefaces.model.Patient;
 
 public class AppointmentRowMapper  implements RowMapper<Appointment> {
@@ -19,7 +20,6 @@ public class AppointmentRowMapper  implements RowMapper<Appointment> {
 		appointment.setStatus(rs.getString("status"));
 		Patient patient = new Patient();
 		patient.setFullName(rs.getString("patient"));
-		System.out.println(patient.getFullName());
 		appointment.setPatient(patient);
 		appointment.setDate(rs.getTimestamp("date"));
 		appointment.setCreatedBy(rs.getString("created_by"));

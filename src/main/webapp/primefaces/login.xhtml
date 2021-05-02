@@ -8,15 +8,20 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<title>Login Page</title>
+	<f:view>
+<ui:insert name="metadata"/>  
+<f:event type="preRenderView" listener="#{loginBean.loginValidation}" />
+</f:view>
+
 </h:head>
 
 <h:body>
 <p:growl id="growl"></p:growl>
-<center>
+
+
 	<h1>Hospital Management System</h1>
-</center><br></br>
+<br></br>
 	<h:form id="loginForm">
 		<p:growl id="msg" showDetail="true" life="4000" />
 		<p:panel id="loginPnl" header="Login"
@@ -31,7 +36,7 @@
 			</h:panelGrid>
 			<h:panelGrid columns="1" cellpadding="10" width="100%">
 				<p:commandButton id="loginButton" action="#{loginBean.login}"
-					value="Login" update="loginForm" ajax="true" style="float: right;">
+					value="Login" style="float: right;">
 				</p:commandButton>
 			</h:panelGrid>
 		</p:panel>

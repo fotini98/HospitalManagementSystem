@@ -9,11 +9,7 @@
 	<ui:composition template="/doctor-template/template.xhtml">
 		<ui:define name="content">
 			<div class="main">
-
 				<p:growl id="growl"></p:growl>
-              <center></center>
-
-
 				<p:dataTable value="#{doctorPrescriptionManagedBean.prescriptions}"
 					var="prescription" id="table">
 					<f:facet name="header">
@@ -53,17 +49,13 @@
 					<p:column headerText="">
 						
 
-						<p:commandButton immediate="true" value="Update"
+						<p:button  value="Update" process="@this"
 							styleClass="rounded-button ui-button-sucess" icon="pi pi-pencil"
-							update="table growl"
-							action="#{doctorPrescriptionManagedBean.update}">
-							<f:setPropertyActionListener
-								target="#{doctorPrescriptionManagedBean.prescription.prescriptionId}"
-								value="#{prescription.prescriptionId}" />
-								<f:setPropertyActionListener
-								target="#{doctorPrescriptionManagedBean.prescription.appointmentId}"
-								value="#{prescription.appointmentId}" />
-						</p:commandButton>
+							outcome="prescription.xhtml?id=#{prescription.appointmentId}&amp;patient=#{prescription.appointment.patient.fullName}"
+							>
+							
+						</p:button>
+				
 
 
 					</p:column>

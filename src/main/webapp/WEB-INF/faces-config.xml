@@ -10,9 +10,14 @@
         <el-resolver>
             org.springframework.web.jsf.el.SpringBeanFacesELResolver
         </el-resolver>
+       
         
         
     </application> 
-    
+    <!-- <navigation-rule>
+    <from-view-id>login.xhtml</from-view-id>
+    <navigation-case> 
+    </navigation-case>
+    </navigation-rule> -->
   
 </faces-config>

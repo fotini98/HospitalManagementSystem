@@ -54,6 +54,7 @@ public class DoctorAppointmentManagedBean {
 	
 	@PostConstruct
 	public void init() {
+		System.err.println("doctor appoint managed bean post construct");
 		System.out.println(loginBean.getEmployee().getFullName());
 		doctor= loginBean.getEmployee();
 		appointment=new Appointment();

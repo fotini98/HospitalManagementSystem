@@ -7,8 +7,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.ikubinfo.primefaces.model.Prescription;
 import com.ikubinfo.primefaces.service.PrescriptionService;
 import com.ikubinfo.primefaces.util.Messages;

@@ -41,7 +41,14 @@ public class AppointmentRepository {
 	
 	private static final String UPDATE_APP_STATUS="UPDATE appointment set status=:status where appointment_id= :appointmentId";
 	
-	
+	/*
+	 * private static final String
+	 * GET_APP_BY_ID="SELECT appointment_id, person.full_name as patient, appointment.patient_id, date, status, appointment.deleted, appointment.created_by, appointment.last_updated, appointment.modified_by "
+	 * + "	FROM appointment " +
+	 * "	inner join patient on patient.patient_id=appointment.patient_id " +
+	 * "	inner join person on person.person_id=patient.patient_id " +
+	 * " where appointment.deleted=false ";
+	 */
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	//private SimpleJdbcInsert insertAppointmentQuery;
 	private JdbcTemplate jdbcTemplate;
@@ -151,7 +158,7 @@ public class AppointmentRepository {
 		
 		return namedParameterJdbcTemplate.update(UPDATE_APP_STATUS, namedParameters)>0;
 	}
-	
+
 	
 	
 

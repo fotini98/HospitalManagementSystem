@@ -4,12 +4,17 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
+<f:view>
+<ui:insert name="metadata"/>  
+<f:event type="preRenderView" listener="#{loginBean.loginValidation}" />
+</f:view>
 </h:head>
 <h:body>
-<ui:composition template="/admin-template/template.xhtml">
+	<ui:composition template="/admin-template/template.xhtml">
 		<ui:define name="content">
 		<div class="main">
 	<p:growl id="growl"></p:growl>
+
 
 	<p:commandButton style="float:right;" value="Add Doctor"
 		update="addDialog" process="@this"
@@ -27,7 +32,7 @@
 
 
 				<p:outputLabel for="full_name" value="Full Name"></p:outputLabel>
-				<p:inputText id="full_name" required="true"
+				<p:inputText id="full_name" 
 					value="#{doctorManagedBean.doctor.fullName}"></p:inputText>
 				<br></br>
 				<br></br>
@@ -41,7 +46,7 @@
 				<br></br>
 
 				<p:outputLabel for="email" value="Email    "></p:outputLabel>
-				<p:inputText id="email" required="true"
+				<p:inputText id="email" 
 					value="#{doctorManagedBean.doctor.email}">
 					<f:validateRegex pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$" />
 
@@ -50,13 +55,13 @@
 				<br></br>
 
 				<p:outputLabel for="address" value="Address"></p:outputLabel>
-				<p:inputText id="address" required="true"
+				<p:inputText id="address" 
 					value="#{doctorManagedBean.doctor.address}"></p:inputText>
 				<br></br>
 				<br></br>
 
 				<p:outputLabel for="phone" value="Phone"></p:outputLabel>
-				<p:inputText id="phone" required="true"
+				<p:inputText id="phone" 
 					value="#{doctorManagedBean.doctor.phone}"></p:inputText>
 				<br></br>
 				<br></br>
@@ -188,12 +193,12 @@
 
 			<h:panelGrid columns="3">
 				<p:outputLabel for="personid" value="Person id"></p:outputLabel>
-				<p:outputLabel id="personid" required="true"
+				<p:outputLabel id="personid" 
 					value="#{doctorManagedBean.doctor.personId}"></p:outputLabel>
 				<br></br>
 				<br></br>
 				<p:outputLabel for="full_name" value="Full Name"></p:outputLabel>
-				<p:inputText id="full_name" required="true"
+				<p:inputText id="full_name" 
 					value="#{doctorManagedBean.doctor.fullName}"></p:inputText>
 				<br></br>
 				<br></br>
@@ -207,7 +212,7 @@
 				<br></br>
 
 				<p:outputLabel for="email" value="Email    "></p:outputLabel>
-				<p:inputText id="email" required="true"
+				<p:inputText id="email" 
 					value="#{doctorManagedBean.doctor.email}">
 					<f:validateRegex pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$" />
 
@@ -216,13 +221,13 @@
 				<br></br>
 
 				<p:outputLabel for="address" value="Address"></p:outputLabel>
-				<p:inputText id="address" required="true"
+				<p:inputText id="address" 
 					value="#{doctorManagedBean.doctor.address}"></p:inputText>
 				<br></br>
 				<br></br>
 
 				<p:outputLabel for="phone" value="Phone"></p:outputLabel>
-				<p:inputText id="phone" required="true"
+				<p:inputText id="phone" 
 					value="#{doctorManagedBean.doctor.phone}"></p:inputText>
 				<br></br>
 				<br></br>

@@ -180,7 +180,7 @@ font-size: 30%;}
   .sidenav a {font-size: 18px;}
 }
 </style>
-<form>
+
 <div class="topnav" id="myTopnav">
   <a href="#home" class="active">Home</a>
   <div class="dropdown">
@@ -188,16 +188,18 @@ font-size: 30%;}
       <i class="fa fa-caret-down"></i>
     </button>
     <div class="dropdown-content">
-     <p:commandButton id="logoutButton" action="#{loginBean.logout}" value="Log out" ajax="true" style="width:100%"></p:commandButton>
+   
+     <p:commandButton  action="#{loginBean.logout}" value="Log out" style="width:100%"></p:commandButton>
   <!--     <a href="#">Link 2</a>
       <a href="#">Link 3</a> -->
+
     </div>
   </div> 
 </div>
-</form>
+
 
 <div class="sidenav">
-  <a href="adminDashboard.xhtml">Dashboard</a>
+ <a href="adminDashboard.xhtml">Dashboard</a>
   <a href="doctorCrud.xhtml">Doctor</a>
   <a href="nurseCrud.xhtml">Nurse</a>
   <a href="receptionistCrud.xhtml">Receptionist</a>

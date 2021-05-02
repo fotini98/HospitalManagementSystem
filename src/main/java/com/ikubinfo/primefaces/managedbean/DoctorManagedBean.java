@@ -62,14 +62,13 @@ public class DoctorManagedBean implements Serializable{
 	}
 	
 	public void delete() {
-		doctor.setRole(new Role(0,"Doctor"));
         doctor.setModifiedBy(loginBean.getEmployee().getFullName());
 		System.out.println(doctor );
 		if(doctorService.deleteEmployee(doctor)) {
 			doctors = doctorService.getAllEmployees("Doctor");
-		messages.showInfoMessage("Doctor was removed successfully");
+		messages.showWarningMessage("Doctor was removed successfully");
 	}else {
-		messages.showInfoMessage("Something went wrong!!");
+		messages.showErrorMessage("Something went wrong!!");
 	
 	 }
 	}

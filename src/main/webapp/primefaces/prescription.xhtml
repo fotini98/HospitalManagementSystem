@@ -1,0 +1,154 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+</h:head>
+<h:body>
+	<ui:composition template="/doctor-template/template.xhtml">
+		<ui:define name="content">
+			<div class="main">
+			<h:outputText value="Appointment Id: #{param['id']}" /><BR /><br/>
+			<h:outputText value="Patient Name: #{param['patient']}" /><br/>
+				<h:form id="form">
+
+					<p:commandButton style="float:right;" value="Add Medicine"
+						update="addDialog" process="@this"
+						styleClass="rounded-button ui-button-success"
+						oncomplete="PF('AddDialog').show();">
+
+					</p:commandButton>
+
+
+					<p:dialog header="Add Medicine" id="addDialog"
+						widgetVar="AddDialog" modal="true">
+						<!-- <h:form id="addForm"> -->
+
+
+
+						<h:panelGrid columns="">
+
+							<p:outputLabel value="Medicine" />
+							<p:selectOneMenu id="medicine"
+								value="#{addPrescriptionManagedBean.medicine.name}"
+								label="Select ">
+
+								<f:selectItem itemLabel="Select Medicine " itemValue="" />
+								<f:selectItems value="#{addPrescriptionManagedBean.medicines}"
+									var="medicine" itemLabel="#{medicine.name}"
+									itemValue="#{medicine.name}" />
+
+							</p:selectOneMenu>
+						
+
+							<p:outputLabel for="dose" value="Dose"></p:outputLabel>
+							<p:inputText id="dose"
+								value="#{addPrescriptionManagedBean.prescriptionMedicine.dose}"></p:inputText>
+						
+
+							<p:outputLabel for="duration" value="Duration"></p:outputLabel>
+							<p:inputText id="duration" value="#{addPrescriptionManagedBean.prescriptionMedicine.duration}"></p:inputText>
+						
+							<p:commandButton process="addDialog" update="table growl"
+								value="Save Medicine"
+								actionListener="#{addPrescriptionManagedBean.addMedicines}"
+								oncomplete="PF('AddDialog').hide();" icon="pi pi-check">
+							</p:commandButton>
+
+						</h:panelGrid>
+						<!-- </h:form> -->
+
+					</p:dialog>
+
+
+					<p:growl id="growl"></p:growl>
+
+					<p:dataTable id="table" var="prescriptionMedicine"
+						value="#{addPrescriptionManagedBean.prescriptionMedicines}"
+						editable="true" editMode="cell" widgetVar="cellProducts">
+
+						<p:ajax event="cellEdit"
+							listener="#{addPrescriptionManagedBean.onCellEdit}"
+							update=":form:growl" />
+
+
+<f:facet name="header">
+						<div class="p-d-flex p-ai-center p-jc-between">
+							<span>Medication</span>
+						</div>
+					</f:facet>
+						<p:column headerText="Medicine">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{prescriptionMedicine.medicine.name}" />
+								</f:facet>
+								<f:facet name="input">
+									<h:selectOneMenu value="#{prescriptionMedicine.medicine.name}"
+										style="width:100%">
+										<f:selectItems value="#{addPrescriptionManagedBean.medicines}"
+											var="medicine" itemLabel="#{medicine.name}"
+											itemValue="#{medicine}" />
+									</h:selectOneMenu>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column headerText="Dose">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{prescriptionMedicine.dose}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText value="#{prescriptionMedicine.dose}"
+										style="width:100%" label="Dose" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column headerText="Duration">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText value="#{prescriptionMedicine.duration}" />
+								</f:facet>
+								<f:facet name="input">
+									<p:inputText value="#{prescriptionMedicine.duration}"
+										style="width:100%" label="Duration" />
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column>
+										<p:commandButton immediate="true" value="Remove"
+							styleClass="rounded-button ui-button-danger" icon="pi pi-trash"
+							update="table :form:growl"
+							action="#{addPrescriptionManagedBean.remove}">
+							<p:confirm header="Confirmation" message="Are you sure?"
+								icon="pi pi-exclamation-triangle" />
+							<f:setPropertyActionListener
+								target="#{addPrescriptionManagedBean.medicine.name}"
+								value="#{prescriptionMedicine.medicine.name}" />
+						</p:commandButton>
+
+
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+							<p:commandButton value="Yes" type="button"
+								styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+							<p:commandButton value="No" type="button"
+								styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+						</p:confirmDialog>
+					</p:column>
+					</p:dataTable>
+					<p:commandButton update="table growl"
+								value="Save Medicine and Complete Appointment"
+								actionListener="#{addPrescriptionManagedBean.addPrescription}"
+								oncomplete="PF('AddDialog').hide();" icon="pi pi-check"
+								/>
+					
+						
+
+				</h:form>
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
