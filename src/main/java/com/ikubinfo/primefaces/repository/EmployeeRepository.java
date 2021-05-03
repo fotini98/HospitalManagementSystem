@@ -39,7 +39,9 @@ public class EmployeeRepository {
 			+ "  password=:password, modified_by=:modifiedBy WHERE person_id=:personId;";
 	private static final String UPDATE_EMPLOYEE_QUERY = "UPDATE employee SET  department_id= :departmentId "
 			+ "	WHERE person_id= :personId";
-
+    private static final String COUNT_EMPLOYEE_BY_ROLE="select count(employee_id)employee_id from employee inner join role on role.role_id=employee.role_id "
+    		+ "inner join person on person.person_id=employee.person_id "
+    		+ "where role.role_name=? and person.deleted=false";
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	private SimpleJdbcInsert insertPersonQuery;
 	private JdbcTemplate jdbcTemplate;
@@ -150,6 +152,13 @@ public class EmployeeRepository {
 		namedParameters.addValue("personId", employee.getPersonId());
 		int updatedPerson = this.namedParameterJdbcTemplate.update(UPDATE_PERSON_QUERY, namedParameters);
 		return updatedPerson > 0;
+	}
+	
+	public int getEmployeeCountByRole(String role) {
+		int count = jdbcTemplate.queryForObject(COUNT_EMPLOYEE_BY_ROLE,
+				new Object[] { role }, Integer.class);
+		System.out.println(count);
+		return count;
 	}
 
 }

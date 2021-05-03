@@ -53,6 +53,23 @@ before insert on
   person 
 for each row execute 
    function deleted_false();
+   
+   
+   CREATE OR REPLACE FUNCTION update_end_time() 
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.end_time = NEW.date + (20 * interval '1 minute');
+    RETURN NEW; 
+END;
+$$ language 'plpgsql';
+
+create trigger 
+   end_time 
+before insert or update on 
+  appointment 
+for each row execute 
+   function update_end_time();
+
 
 -- CREATE TYPE gender AS ENUM ('Female', 'Male');
 

@@ -33,7 +33,9 @@ public class EmployeeService {
 		    dao.updatePerson(employee);
 		return dao.updateEmployee(employee);
 	}
-	
+	public int getEmployeeCountByRole(String role) {
+		return dao.getEmployeeCountByRole(role);
+	}
 	
 
 }

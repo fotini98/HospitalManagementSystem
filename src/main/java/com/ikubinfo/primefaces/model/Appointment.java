@@ -58,14 +58,15 @@ public class Appointment {
 	public void setDoctorId(long doctorId) {
 		this.doctorId = doctorId;
 	}
+
+
+
 	public Date getDate() {
 		return date;
 	}
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	
-
 	public String getStatus() {
 		return status;
 	}

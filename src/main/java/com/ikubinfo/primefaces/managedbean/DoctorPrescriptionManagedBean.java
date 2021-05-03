@@ -8,6 +8,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import com.ikubinfo.primefaces.model.Prescription;
+import com.ikubinfo.primefaces.model.PrescriptionMedicine;
 import com.ikubinfo.primefaces.service.PrescriptionService;
 import com.ikubinfo.primefaces.util.Messages;
 
@@ -27,6 +28,7 @@ public class DoctorPrescriptionManagedBean {
 	@ManagedProperty(value = "#{loginBean}")
 	private LoginBean loginBean;
 	
+	private List<PrescriptionMedicine> prescriptionMedicines;
 	@PostConstruct
 	public void init() {
 		
@@ -36,12 +38,11 @@ public class DoctorPrescriptionManagedBean {
 	}
 	
 	public void view(){
-		
+		prescriptionMedicines=prescriptionService.getPrescriptionMedicine(prescription.getAppointmentId());
+		System.out.println(prescriptionMedicines+"from view");
 	}
 	
-	public void update(){
-		
-	}
+
 	public Prescription getPrescription() {
 		return prescription;
 	}
@@ -80,6 +81,14 @@ public class DoctorPrescriptionManagedBean {
 
 	public void setLoginBean(LoginBean loginBean) {
 		this.loginBean = loginBean;
+	}
+
+	public List<PrescriptionMedicine> getPrescriptionMedicines() {
+		return prescriptionMedicines;
+	}
+
+	public void setPrescriptionMedicines(List<PrescriptionMedicine> prescriptionMedicines) {
+		this.prescriptionMedicines = prescriptionMedicines;
 	}
 	
 	

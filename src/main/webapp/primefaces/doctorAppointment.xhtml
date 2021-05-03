@@ -37,23 +37,27 @@
 								<f:selectItem itemLabel="Select Patient " itemValue="" />
 								<f:selectItems value="#{doctorAppointmentManagedBean.patients}"
 									var="patient" itemLabel="#{patient.fullName}"
-									itemValue="#{patient.fullName}" />
+									itemValue="#{patient.fullName}" required="true"/>
 
 							</p:selectOneMenu>
 
 
-							<p:outputLabel for="date" value="Time" />
-							<p:datePicker id="date"
+							<p:outputLabel for="timeMinMax" value="Time (Min-Max)" />
+							<p:datePicker id="timeMinMax"
 								value="#{doctorAppointmentManagedBean.appointment.date}"
-								showTime="true" locale="de" pattern="dd.MM.yyyy" />
-
-							<br></br>
-							<br></br>
-
-							<p:commandButton process="addDialog" update="table growl"
+								showTime="true" required="true"
+								mindate="#{doctorAppointmentManagedBean.minDateTime}"
+								maxdate="#{doctorAppointmentManagedBean.maxDateTime}" >
+								<p:ajax   listener="#{doctorAppointmentManagedBean.duplicateValidation}"
+				                      	update="saveBtn growl "/>
+						
+								</p:datePicker>
+								
+								
+							<p:commandButton id="saveBtn" process="addDialog" update="table growl"
 								value="Save"
 								actionListener="#{doctorAppointmentManagedBean.create}"
-								oncomplete="PF('AddDialog').hide();" icon="pi pi-check">
+								oncomplete="PF('AddDialog').hide();" icon="pi pi-check" disabled="#{doctorAppointmentManagedBean.busy}">
 
 							</p:commandButton>
 
@@ -64,7 +68,7 @@
 
 				</p:dialog>
 
-				
+
 
 
 				<p:dataTable value="#{doctorAppointmentManagedBean.appointments}"
@@ -101,14 +105,13 @@
 					</p:column>
 					<p:column headerText="">
 
-						<p:button icon="pi pi-pencil" value="Prescription"
-							 process="@this"
+						<p:button icon="pi pi-pencil" value="Prescription" process="@this"
 							styleClass="rounded-button ui-button-sucess"
 							outcome="prescription.xhtml?id=#{appointment.appointmentId}&amp;patient=#{appointment.patient.fullName}"
 							action="prescription.xhtml?faces-redirect=true"
 							disabled="#{appointment.status eq 'Completed' or appointment.status eq 'Rejected'}">
 
-				
+
 
 						</p:button>
 
@@ -185,7 +188,7 @@
 								<f:selectItem itemLabel="Select Patient " itemValue="" />
 								<f:selectItems value="#{doctorAppointmentManagedBean.patients}"
 									var="patient" itemLabel="#{patient.fullName}"
-									itemValue="#{patient.fullName}" />
+									itemValue="#{patient.fullName}" required="true"/>
 
 							</p:selectOneMenu>
 

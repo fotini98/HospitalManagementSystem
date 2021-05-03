@@ -1,6 +1,8 @@
 package com.ikubinfo.primefaces.managedbean;
 
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -34,7 +36,7 @@ public class DoctorAppointmentManagedBean {
 	private Appointment appointment;
 	private List<Appointment> appointments;
 	private List<Patient> patients;
-	private Patient patient;//??
+	private Patient patient;
 	private Prescription prescription;
 	
 	private List<Medicine> medicines;
@@ -48,9 +50,12 @@ public class DoctorAppointmentManagedBean {
 	@ManagedProperty(value = "#{prescriptionService}")
 	private PrescriptionService prescriptionService;
 	
+	private boolean busy;
+	
 	@ManagedProperty(value="#{messages}")
 	private Messages message;
-	
+	private Date minDateTime;
+    private Date maxDateTime;
 	
 	@PostConstruct
 	public void init() {
@@ -62,11 +67,17 @@ public class DoctorAppointmentManagedBean {
 		patients=service.getPatients();
 		medicines = prescriptionService.getAllMedicines();
 		patient=new Patient();
+		 long oneDay = 24 * 60 * 60 * 1000;
+		
+		 Date today = new Date();
+		minDateTime = new Date(today.getTime() );
+        maxDateTime = new Date(today.getTime()+ (20*oneDay));
 	}
 	
 	public void create() {
 		appointment.setPatient(patient);
 		appointment.setDoctorId(doctor.getEmployeeId());
+		
 		if(service.create(appointment)) {
 			appointments=service.getAllDoctorAppointment(doctor.getEmployeeId());
 			message.showInfoMessage("Appointment Added Successfully!");
@@ -105,54 +116,17 @@ public class DoctorAppointmentManagedBean {
 		}
 	}
 	
-	public void addMedicinePanel(ActionEvent event) {
-		UIComponent component = FacesContext.getCurrentInstance().getViewRoot().findComponent("myPanelGrid");
-		System.out.println(component);
-		if (component != null) {
-			Panel p = new Panel();
-			p.setClosable(true);
-			p.setHeader("");
-			p.setVisible(true);
-			
-	
-			OutputLabel medicine = new OutputLabel();
-			medicine.setValue("Medicine  ");
-		//	medicine.setFor("medicine");
-
-			OutputLabel dose = new OutputLabel();
-			dose.setValue("Dose  ");
-			InputText doseTxt=new InputText();
-		
-
-			OutputLabel duration = new OutputLabel();
-			duration.setValue("Duration  ");
-			InputText durationTxt=new InputText();
-			SelectOneMenu selectMedicine = new SelectOneMenu();
-
-			UISelectItems selectOptions = new UISelectItems();
-			selectOptions.setValue(medicines);
-			
-			selectMedicine.getChildren().add(selectOptions);
-			//selectMedicine.setId("medicine");
-			selectMedicine.setRequired(false);
-
-			component.getChildren().add(p);
-			p.getChildren().add(medicine);
-			p.getChildren().add(selectMedicine);
-			p.getChildren().add(dose);
-			p.getChildren().add(doseTxt);
-			p.getChildren().add(duration);
-			p.getChildren().add(durationTxt);
-component.processUpdates(null);
-		
-			System.err.println(medicines);
-
+	public void duplicateValidation() {
+		System.out.println(service.appointmentOccupied(appointment.getDate(),doctor.getEmployeeId()));
+		if(service.appointmentOccupied(appointment.getDate(),doctor.getEmployeeId())) {
+			message.showInfoMessage("Appointment at "+appointment.getDate()+" is already occupied!");
+			this.busy=true;
+		}else {
+			this.busy=false;
 		}
-		
-		
 	}
-
-
+		
+	
 	public Employee getDoctor() {
 		return doctor;
 	}
@@ -246,6 +220,30 @@ component.processUpdates(null);
 
 	public void setLoginBean(LoginBean loginBean) {
 		this.loginBean = loginBean;
+	}
+
+	public Date getMinDateTime() {
+		return minDateTime;
+	}
+
+	public void setMinDateTime(Date minDateTime) {
+		this.minDateTime = minDateTime;
+	}
+
+	public Date getMaxDateTime() {
+		return maxDateTime;
+	}
+
+	public void setMaxDateTime(Date maxDateTime) {
+		this.maxDateTime = maxDateTime;
+	}
+
+	public boolean isBusy() {
+		return busy;
+	}
+
+	public void setBusy(boolean busy) {
+		this.busy = busy;
 	}
 	
 	

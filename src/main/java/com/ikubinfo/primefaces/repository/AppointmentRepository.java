@@ -1,4 +1,5 @@
 package com.ikubinfo.primefaces.repository;
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -6,6 +7,7 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -40,6 +42,10 @@ public class AppointmentRepository {
 			+ "where person.full_name= ?";
 	
 	private static final String UPDATE_APP_STATUS="UPDATE appointment set status=:status where appointment_id= :appointmentId";
+	
+	private static final String GET_APP_AVAILABILITY="select count(*) as count from appointment where appointment.date <= ? "
+			+ "and end_time between ? and ? "
+			+ "and appointment.status='Approved'  and appointment.doctor_id=?";
 	
 	/*
 	 * private static final String
@@ -149,7 +155,7 @@ public class AppointmentRepository {
 	}
 	
 	public boolean updateAppointmentStatus(Appointment appointment) {
-		System.out.println("from updateappointmentstatus method"+ appointment.getStatus());
+		
 		MapSqlParameterSource namedParameters=new MapSqlParameterSource();
 		
 		namedParameters.addValue("appointmentId", appointment.getAppointmentId());
@@ -157,6 +163,20 @@ public class AppointmentRepository {
 		
 		
 		return namedParameterJdbcTemplate.update(UPDATE_APP_STATUS, namedParameters)>0;
+	}
+	
+	public boolean appointmentOccupied(Timestamp newAppStart, long doctorId) {
+		Timestamp newAppEnd=new Timestamp(newAppStart.getTime()+(20*60*1000));
+        int count;
+		try {
+        	  count = jdbcTemplate.queryForObject(GET_APP_AVAILABILITY,new Object[] { newAppStart, newAppStart, newAppEnd, doctorId }, Integer.class);
+        	 System.out.println(newAppStart  +" "+ newAppStart+" "+newAppEnd +" "+doctorId);
+        	  System.out.println("count query result "+count);
+         }catch(EmptyResultDataAccessException e) {
+        	 count=0;
+         }
+					
+		return count>0;
 	}
 
 	

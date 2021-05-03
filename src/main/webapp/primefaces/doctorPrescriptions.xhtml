@@ -1,7 +1,9 @@
+
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jstl/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 </h:head>
@@ -25,7 +27,8 @@
 						<p:outputLabel value="#{prescription.appointmentId}"></p:outputLabel>
 					</p:column>
 					<p:column headerText="Patient">
-						<p:outputLabel value="#{prescription.appointment.patient.fullName}"></p:outputLabel>
+						<p:outputLabel
+							value="#{prescription.appointment.patient.fullName}"></p:outputLabel>
 
 					</p:column>
 
@@ -33,42 +36,48 @@
 
 
 						<p:commandButton immediate="true" value="View"
-							styleClass="rounded-button ui-button-secondary"
-							icon="pi pi-eye" update="table growl"
-							action="#{doctorPrescriptionManagedBean.view}">
-							<!-- disabled="#{appointment.status eq 'Completed'}" -->
-							
+							styleClass="rounded-button ui-button-secondary" icon="pi pi-eye"
+							update="table growl"
+							action="#{doctorPrescriptionManagedBean.view}"
+							oncomplete="PF('PrescriptionDialog').show();">
+
 							<f:setPropertyActionListener
 								target="#{doctorPrescriptionManagedBean.prescription.prescriptionId}"
 								value="#{prescription.prescriptionId}" />
-								<f:setPropertyActionListener
+							<f:setPropertyActionListener
 								target="#{doctorPrescriptionManagedBean.prescription.appointmentId}"
 								value="#{prescription.appointmentId}" />
 						</p:commandButton>
+
+
 					</p:column>
 					<p:column headerText="">
-						
 
-						<p:button  value="Update" process="@this"
+
+						<p:button value="Update" process="@this"
 							styleClass="rounded-button ui-button-sucess" icon="pi pi-pencil"
-							outcome="prescription.xhtml?id=#{prescription.appointmentId}&amp;patient=#{prescription.appointment.patient.fullName}"
-							>
-							
-						</p:button>
-				
+							outcome="prescription.xhtml?id=#{prescription.appointmentId}&amp;patient=#{prescription.appointment.patient.fullName}">
 
+						</p:button>
 
 					</p:column>
 
 				</p:dataTable>
 
-				<p:dialog header="Edit Appointments" id="updateDialog"
-					widgetVar="EditDialog" modal="true">
-					<h:form id="dialogForm">
-
-					
-					</h:form>
-
+				<p:dialog header="Prescription" id="rescriptionDialog"
+					widgetVar="PrescriptionDialog" modal="true">
+					<h:panelGrid columns="2">
+						<table>
+							<ui:repeat value="#{doctorPrescriptionManagedBean.prescriptionMedicines}" var="prescMedi">
+								<tr>
+									<td>#{prescMedi.dose}</td>
+									<td>#{prescMedi.duration}</td>
+								<!-- 	<td>#{user.email}</a></td>
+									<td>#{user.birthdate}</td> -->
+									</tr>
+							</ui:repeat>
+						</table>
+</h:panelGrid>
 				</p:dialog>
 			</div>
 

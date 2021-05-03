@@ -8,12 +8,26 @@
 <h:body>
 	<ui:composition template="/admin-template/template.xhtml">
 		<ui:define name="content">
-			<div class="main">
-<p:growl id="growl"></p:growl>
-<form>
+			<div class="main" style="display:inline-block">
+				<p:growl id="growl"></p:growl>
+				<p:panel style="width: 220px" id="sports" header="Doctors">
+					<h:outputText value="#{adminDashboard.doctorCount}" />
+				</p:panel>
 
-</form>
-				
+				<p:panel style="width: 220px" id="finance" header="Receptionists">
+					<h:outputText value="#{adminDashboard.receptionistCount}" />
+				</p:panel>
+
+				<p:panel style="width: 220px" id="lifestyle" header="Nurses">
+					<h:outputText value="#{adminDashboard.nurseCount}" />
+				</p:panel>
+
+				<p:panel style="width: 220px" id="weather" header="Patients">
+					<h:outputText value="#{adminDashboard.patientCount}" />
+				</p:panel>
+
+		
+
 			</div>
 
 		</ui:define>

@@ -6,51 +6,40 @@
 <h:head>
 </h:head>
 <h:body>
-<ui:composition template="/admin-template/template.xhtml">
+	<ui:composition template="/admin-template/template.xhtml">
 		<ui:define name="content">
-		<div class="main">
-	<p:growl id="growl"></p:growl>
-	
-	
-	
-		<ui:composition template="/admin-template/template.xhtml">
-		<ui:define name="content">
+
+
 			<div class="main">
 				<p:growl id="growl"></p:growl>
 
-				<p:commandButton style="float:right;" value="Add Receptionist"
+				<p:commandButton style="float:right;" value="Add Nurse"
 					update="addDialog" process="@this"
 					styleClass="rounded-button ui-button-success"
 					oncomplete="PF('AddDialog').show();">
-
 				</p:commandButton>
 
-
-				<p:dialog header="Add Receptionist" id="addDialog"
-					widgetVar="AddDialog" modal="true">
+				<p:dialog header="Add Nurse" id="addDialog" widgetVar="AddDialog"
+					modal="true">
 					<h:form id="addForm">
 
 						<h:panelGrid columns="3">
 
-
 							<p:outputLabel for="full_name" value="Full Name"></p:outputLabel>
-							<p:inputText id="full_name" 
-								value="#{receptionistManagedBean.receptionist.fullName}"></p:inputText>
+							<p:inputText id="full_name"
+								value="#{nurseManagedBean.nurse.fullName}"></p:inputText>
 							<br></br>
 							<br></br>
 
 							<p:outputLabel for="birth_date" value="Birth Date" />
 							<p:datePicker id="birth_date"
-								value="#{receptionistManagedBean.receptionist.birthDate}"
+								value="#{nurseManagedBean.nurse.birthDate}"
 								monthNavigator="true" yearNavigator="true" showWeek="true"
 								yearRange="1930:2021" />
-
 							<br></br>
 							<br></br>
-
 							<p:outputLabel for="email" value="Email    "></p:outputLabel>
-							<p:inputText id="email" 
-								value="#{receptionistManagedBean.receptionist.email}">
+							<p:inputText id="email" value="#{nurseManagedBean.nurse.email}">
 								<f:validateRegex pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$" />
 
 							</p:inputText>
@@ -58,14 +47,13 @@
 							<br></br>
 
 							<p:outputLabel for="address" value="Address"></p:outputLabel>
-							<p:inputText id="address" 
-								value="#{receptionistManagedBean.receptionist.address}"></p:inputText>
+							<p:inputText id="address"
+								value="#{nurseManagedBean.nurse.address}"></p:inputText>
 							<br></br>
 							<br></br>
 
 							<p:outputLabel for="phone" value="Phone"></p:outputLabel>
-							<p:inputText id="phone" 
-								value="#{receptionistManagedBean.receptionist.phone}"></p:inputText>
+							<p:inputText id="phone" value="#{nurseManagedBean.nurse.phone}"></p:inputText>
 							<br></br>
 							<br></br>
 
@@ -74,8 +62,7 @@
 
 							<p:outputLabel value="Gender" />
 							<p:selectOneMenu id="gender"
-								value="#{receptionistManagedBean.receptionist.gender}"
-								label="Select">
+								value="#{nurseManagedBean.nurse.gender}" label="Select">
 								<f:selectItem itemLabel="Select One" itemValue="" />
 								<f:selectItems value="#{gender.ALL_ENUM_VALUES}" />
 							</p:selectOneMenu>
@@ -84,26 +71,21 @@
 
 							<p:outputLabel value="Department" />
 							<p:selectOneMenu id="lable"
-								value="#{receptionistManagedBean.department.name}"
-								label="Select ">
+								value="#{nurseManagedBean.department.name}" label="Select ">
 
 
 								<f:selectItem itemLabel="Select One" itemValue="" />
-								<f:selectItems value="#{receptionistManagedBean.departments}" />
+								<f:selectItems value="#{nurseManagedBean.departments}" />
 
 							</p:selectOneMenu>
 							<br></br>
 							<br></br>
 
-
-
 							<p:commandButton process="addDialog" update="table growl"
-								value="Save" actionListener="#{receptionistManagedBean.save}"
+								value="Save" actionListener="#{nurseManagedBean.save}"
 								oncomplete="PF('AddDialog').hide();" icon="pi pi-check">
 
 							</p:commandButton>
-
-
 
 						</h:panelGrid>
 					</h:form>
@@ -111,47 +93,42 @@
 				</p:dialog>
 
 
-
-
-				<center></center>
-				<p:dataTable id="table"
-					value="#{receptionistManagedBean.receptionists}" var="receptionist">
+				<p:dataTable id="table" value="#{nurseManagedBean.nurses}"
+					var="nurse">
 					<f:facet name="header">
 						<div class="p-d-flex p-ai-center p-jc-between">
-							<span>List of Receptionists</span>
+							<span>List of Nurses</span>
 						</div>
 					</f:facet>
 
 
-
-
 					<p:column headerText="Full Name">
-						<p:outputLabel value="#{receptionist.fullName}"></p:outputLabel>
+						<p:outputLabel value="#{nurse.fullName}"></p:outputLabel>
 					</p:column>
 					<p:column headerText="Birth Date">
-						<p:outputLabel value="#{receptionist.birthDate}"></p:outputLabel>
+						<p:outputLabel value="#{nurse.birthDate}"></p:outputLabel>
 					</p:column>
 					<p:column headerText="Age">
-						<p:outputLabel value="#{receptionist.age}"></p:outputLabel>
+						<p:outputLabel value="#{nurse.age}"></p:outputLabel>
 					</p:column>
 
 					<p:column headerText="Email">
-						<p:outputLabel value="#{receptionist.email}"></p:outputLabel>
+						<p:outputLabel value="#{nurse.email}"></p:outputLabel>
 					</p:column>
 					<p:column headerText="Address">
-						<p:outputLabel value="#{receptionist.address}"></p:outputLabel>
+						<p:outputLabel value="#{nurse.address}"></p:outputLabel>
 					</p:column>
 					<p:column headerText="phone">
-						<p:outputLabel value="#{receptionist.phone}"></p:outputLabel>
+						<p:outputLabel value="#{nurse.phone}"></p:outputLabel>
 					</p:column>
 
 
 					<p:column headerText="Created By">
-						<p:outputLabel value="#{receptionist.createdBy}"></p:outputLabel>
+						<p:outputLabel value="#{nurse.createdBy}"></p:outputLabel>
 					</p:column>
 
 					<p:column headerText="Department">
-						<p:outputLabel value="#{receptionist.department}"></p:outputLabel>
+						<p:outputLabel value="#{nurse.department}"></p:outputLabel>
 					</p:column>
 
 
@@ -162,26 +139,21 @@
 							styleClass="rounded-button ui-button-sucess"
 							oncomplete="PF('EditDialog').show();">
 
+							<f:setPropertyActionListener target="#{nurseManagedBean.nurse}"
+								value="#{nurse}" />
 							<f:setPropertyActionListener
-								target="#{receptionistManagedBean.receptionist}"
-								value="#{receptionist}" />
-							<f:setPropertyActionListener
-								target="#{receptionistManagedBean.department}"
-								value="#{receptionist.department}" />
-
+								target="#{nurseManagedBean.department}"
+								value="#{nurse.department}" />
 
 						</p:commandButton>
-
-
 						<p:commandButton immediate="true" value="Delete"
 							styleClass="rounded-button ui-button-danger" icon="pi pi-trash"
-							update="table growl" action="#{receptionistManagedBean.delete}">
+							update="table growl" action="#{nurseManagedBean.delete}">
 							<p:confirm header="Confirmation" message="Are you sure?"
 								icon="pi pi-exclamation-triangle" />
 
-							<f:setPropertyActionListener
-								target="#{receptionistManagedBean.receptionist}"
-								value="#{receptionist}" />
+							<f:setPropertyActionListener target="#{nurseManagedBean.nurse}"
+								value="#{nurse}" />
 						</p:commandButton>
 
 						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
@@ -190,29 +162,28 @@
 							<p:commandButton value="No" type="button"
 								styleClass="ui-confirmdialog-no" icon="pi pi-times" />
 						</p:confirmDialog>
-
 					</p:column>
 				</p:dataTable>
 
-				<p:dialog header="Edit Receptionist" id="updateDialog"
+				<p:dialog header="Edit Nurse" id="updateDialog"
 					widgetVar="EditDialog" modal="true">
 					<h:form id="dialogForm">
 
 						<h:panelGrid columns="3">
 							<p:outputLabel for="personid" value="Person id"></p:outputLabel>
-							<p:outputLabel id="personid" 
-								value="#{receptionistManagedBean.receptionist.personId}"></p:outputLabel>
+							<p:outputLabel id="personid"
+								value="#{nurseManagedBean.nurse.personId}"></p:outputLabel>
 							<br></br>
 							<br></br>
 							<p:outputLabel for="full_name" value="Full Name"></p:outputLabel>
-							<p:inputText id="full_name" 
-								value="#{receptionistManagedBean.receptionist.fullName}"></p:inputText>
+							<p:inputText id="full_name"
+								value="#{nurseManagedBean.nurse.fullName}"></p:inputText>
 							<br></br>
 							<br></br>
 
 							<p:outputLabel for="birth_date" value="Birth Date" />
 							<p:datePicker id="birth_date"
-								value="#{receptionistManagedBean.receptionist.birthDate}"
+								value="#{nurseManagedBean.nurse.birthDate}"
 								monthNavigator="true" yearNavigator="true" showWeek="true"
 								yearRange="1930:2021" />
 
@@ -220,8 +191,7 @@
 							<br></br>
 
 							<p:outputLabel for="email" value="Email    "></p:outputLabel>
-							<p:inputText id="email" 
-								value="#{receptionistManagedBean.receptionist.email}">
+							<p:inputText id="email" value="#{nurseManagedBean.nurse.email}">
 								<f:validateRegex pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$" />
 
 							</p:inputText>
@@ -230,339 +200,41 @@
 
 							<p:outputLabel for="address" value="Address"></p:outputLabel>
 							<p:inputText id="address"
-								value="#{receptionistManagedBean.receptionist.address}"></p:inputText>
+								value="#{nurseManagedBean.nurse.address}"></p:inputText>
 							<br></br>
 							<br></br>
 
 							<p:outputLabel for="phone" value="Phone"></p:outputLabel>
-							<p:inputText id="phone" 
-								value="#{receptionistManagedBean.receptionist.phone}"></p:inputText>
+							<p:inputText id="phone" value="#{nurseManagedBean.nurse.phone}"></p:inputText>
 							<br></br>
 							<br></br>
 
 							<p:outputLabel value="Department" />
 							<p:selectOneMenu id="lable"
-								value="#{receptionistManagedBean.department.name}"
-								label="Select">
+								value="#{nurseManagedBean.department.name}" label="Select">
 
 
 								<f:selectItem itemLabel="Select One" itemValue="" />
-								<f:selectItems value="#{receptionistManagedBean.departments}" />
+								<f:selectItems value="#{nurseManagedBean.departments}" />
 
 							</p:selectOneMenu>
 							<br></br>
 							<br></br>
 
 							<p:commandButton process="updateDialog" update="table growl"
-								value="Save" actionListener="#{receptionistManagedBean.update}"
+								value="Save" actionListener="#{nurseManagedBean.update}"
 								oncomplete="PF('EditDialog').hide();">
-
 							</p:commandButton>
-
-
 
 						</h:panelGrid>
 					</h:form>
+
 				</p:dialog>
 			</div>
 
 		</ui:define>
 	</ui:composition>
 
-
-
-
-
-
-
-
-
-
-
-
-<div class="sidenav">
-  <a href="adminDashboard.xhtml">Dashboard</a>
-  <a href="doctorCrud.xhtml">Doctor</a>
-  <a href="nurseCrud.xhtml">Nurse</a>
-  <a href="receptionistCrud.xhtml">Receptionist</a>
-  <a href="patientCrud.xhtml">Patient</a>
-  <a href="#profile">Profile</a>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="main">
-		<p:growl id="growl"></p:growl>
-
-		<p:commandButton style="float:right;" value="Add Nurse"
-			update="addDialog" process="@this"
-			styleClass="rounded-button ui-button-success"
-			oncomplete="PF('AddDialog').show();">
-		</p:commandButton>
-
-		<p:dialog header="Add Nurse" id="addDialog" widgetVar="AddDialog"
-			modal="true">
-			<h:form id="addForm">
-
-				<h:panelGrid columns="3">
-
-					<p:outputLabel for="full_name" value="Full Name"></p:outputLabel>
-					<p:inputText id="full_name" 
-						value="#{nurseManagedBean.nurse.fullName}"></p:inputText>
-					<br></br>
-					<br></br>
-
-					<p:outputLabel for="birth_date" value="Birth Date" />
-					<p:datePicker id="birth_date"
-						value="#{nurseManagedBean.nurse.birthDate}" monthNavigator="true"
-						yearNavigator="true" showWeek="true" yearRange="1930:2021" />
-					<br></br>
-					<br></br>
-					<p:outputLabel for="email" value="Email    "></p:outputLabel>
-					<p:inputText id="email" 
-						value="#{nurseManagedBean.nurse.email}">
-						<f:validateRegex pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$" />
-
-					</p:inputText>
-					<br></br>
-					<br></br>
-
-					<p:outputLabel for="address" value="Address"></p:outputLabel>
-					<p:inputText id="address" 
-						value="#{nurseManagedBean.nurse.address}"></p:inputText>
-					<br></br>
-					<br></br>
-
-					<p:outputLabel for="phone" value="Phone"></p:outputLabel>
-					<p:inputText id="phone" 
-						value="#{nurseManagedBean.nurse.phone}"></p:inputText>
-					<br></br>
-					<br></br>
-
-					<p:importEnum type="com.ikubinfo.primefaces.model.Gender"
-						var="gender" allSuffix="ALL_ENUM_VALUES" />
-
-					<p:outputLabel value="Gender" />
-					<p:selectOneMenu id="gender"
-						value="#{nurseManagedBean.nurse.gender}" label="Select">
-						<f:selectItem itemLabel="Select One" itemValue="" />
-						<f:selectItems value="#{gender.ALL_ENUM_VALUES}" />
-					</p:selectOneMenu>
-					<br></br>
-					<br></br>
-
-					<p:outputLabel value="Department" />
-					<p:selectOneMenu id="lable"
-						value="#{nurseManagedBean.department.name}" label="Select ">
-
-
-						<f:selectItem itemLabel="Select One" itemValue="" />
-						<f:selectItems value="#{nurseManagedBean.departments}" />
-
-					</p:selectOneMenu>
-					<br></br>
-					<br></br>
-
-					<p:commandButton process="addDialog" update="table growl"
-						value="Save" actionListener="#{nurseManagedBean.save}"
-						oncomplete="PF('AddDialog').hide();" icon="pi pi-check">
-
-					</p:commandButton>
-
-				</h:panelGrid>
-			</h:form>
-
-		</p:dialog>
-
-
-		<p:dataTable id="table" value="#{nurseManagedBean.nurses}" var="nurse">
-			<f:facet name="header">
-				<div class="p-d-flex p-ai-center p-jc-between">
-					<span>List of Nurses</span>
-				</div>
-			</f:facet>
-
-
-			<p:column headerText="Full Name">
-				<p:outputLabel value="#{nurse.fullName}"></p:outputLabel>
-			</p:column>
-			<p:column headerText="Birth Date">
-				<p:outputLabel value="#{nurse.birthDate}"></p:outputLabel>
-			</p:column>
-			<p:column headerText="Age">
-				<p:outputLabel value="#{nurse.age}"></p:outputLabel>
-			</p:column>
-
-			<p:column headerText="Email">
-				<p:outputLabel value="#{nurse.email}"></p:outputLabel>
-			</p:column>
-			<p:column headerText="Address">
-				<p:outputLabel value="#{nurse.address}"></p:outputLabel>
-			</p:column>
-			<p:column headerText="phone">
-				<p:outputLabel value="#{nurse.phone}"></p:outputLabel>
-			</p:column>
-
-
-			<p:column headerText="Created By">
-				<p:outputLabel value="#{nurse.createdBy}"></p:outputLabel>
-			</p:column>
-
-			<p:column headerText="Department">
-				<p:outputLabel value="#{nurse.department}"></p:outputLabel>
-			</p:column>
-
-
-			<p:column headerText="Actions">
-
-				<p:commandButton icon="pi pi-pencil" value="Edit"
-					update="updateDialog" process="@this"
-					styleClass="rounded-button ui-button-sucess"
-					oncomplete="PF('EditDialog').show();">
-
-					<f:setPropertyActionListener target="#{nurseManagedBean.nurse}"
-						value="#{nurse}" />
-					<f:setPropertyActionListener
-						target="#{nurseManagedBean.department}"
-						value="#{nurse.department}" />
-
-				</p:commandButton>
-				<p:commandButton immediate="true" value="Delete"
-					styleClass="rounded-button ui-button-danger" icon="pi pi-trash"
-					update="table growl" action="#{nurseManagedBean.delete}">
-					<p:confirm header="Confirmation" message="Are you sure?"
-						icon="pi pi-exclamation-triangle" />
-
-					<f:setPropertyActionListener target="#{nurseManagedBean.nurse}"
-						value="#{nurse}" />
-				</p:commandButton>
-
-				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-					<p:commandButton value="Yes" type="button"
-						styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
-					<p:commandButton value="No" type="button"
-						styleClass="ui-confirmdialog-no" icon="pi pi-times" />
-				</p:confirmDialog>
-			</p:column>
-		</p:dataTable>
-
-		<p:dialog header="Edit Nurse" id="updateDialog" widgetVar="EditDialog"
-			modal="true">
-			<h:form id="dialogForm">
-
-				<h:panelGrid columns="3">
-					<p:outputLabel for="personid" value="Person id"></p:outputLabel>
-					<p:outputLabel id="personid" 
-						value="#{nurseManagedBean.nurse.personId}"></p:outputLabel>
-					<br></br>
-					<br></br>
-					<p:outputLabel for="full_name" value="Full Name"></p:outputLabel>
-					<p:inputText id="full_name" 
-						value="#{nurseManagedBean.nurse.fullName}"></p:inputText>
-					<br></br>
-					<br></br>
-
-					<p:outputLabel for="birth_date" value="Birth Date" />
-					<p:datePicker id="birth_date"
-						value="#{nurseManagedBean.nurse.birthDate}" monthNavigator="true"
-						yearNavigator="true" showWeek="true" yearRange="1930:2021" />
-
-					<br></br>
-					<br></br>
-
-					<p:outputLabel for="email" value="Email    "></p:outputLabel>
-					<p:inputText id="email" 
-						value="#{nurseManagedBean.nurse.email}">
-						<f:validateRegex pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$" />
-
-					</p:inputText>
-					<br></br>
-					<br></br>
-
-					<p:outputLabel for="address" value="Address"></p:outputLabel>
-					<p:inputText id="address" 
-						value="#{nurseManagedBean.nurse.address}"></p:inputText>
-					<br></br>
-					<br></br>
-
-					<p:outputLabel for="phone" value="Phone"></p:outputLabel>
-					<p:inputText id="phone" 
-						value="#{nurseManagedBean.nurse.phone}"></p:inputText>
-					<br></br>
-					<br></br>
-
-					<p:outputLabel value="Department" />
-					<p:selectOneMenu id="lable"
-						value="#{nurseManagedBean.department.name}" label="Select">
-
-
-						<f:selectItem itemLabel="Select One" itemValue="" />
-						<f:selectItems value="#{nurseManagedBean.departments}" />
-
-					</p:selectOneMenu>
-					<br></br>
-					<br></br>
-
-					<p:commandButton process="updateDialog" update="table growl"
-						value="Save" actionListener="#{nurseManagedBean.update}"
-						oncomplete="PF('EditDialog').hide();">
-					</p:commandButton>
-
-				</h:panelGrid>
-			</h:form>
-
-		</p:dialog>
-	</div>
-	
-	
-	
-	</div>
-	</ui:define>
-	</ui:composition>
-	
 
 
 

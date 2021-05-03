@@ -9,13 +9,10 @@
 	<ui:composition template="/doctor-template/template.xhtml">
 		<ui:define name="content">
 			<div class="main">
-
-				<p:panelGrid id="myPanelGrid" columns="1">
-				</p:panelGrid>
-
+			
 				<h:form id="form">
-					<p:commandButton value="Add Panel"
-						actionListener="#{testManagedBean.addPanel}" update="myPanelGrid" />
+					
+        <p:datePicker id="inline" inline="true"/>
 				</h:form>
 			</div>
 
