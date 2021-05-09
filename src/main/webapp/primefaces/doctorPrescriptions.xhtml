@@ -34,50 +34,48 @@
 
 					<p:column headerText="Actions">
 
+						<h:form>
+							<p:commandButton value="View"
+								styleClass="rounded-button ui-button-secondary" icon="pi pi-eye"
+								update="rescriptionDialog"
+								oncomplete="PF('PrescriptionDialog').show();"
+								action="#{doctorPrescriptionManagedBean.viewPrescription}">
+								<f:setPropertyActionListener
+									target="#{doctorPrescriptionManagedBean.prescription.appointmentId}"
+									value="#{prescription.appointmentId}" />
 
-						<p:commandButton immediate="true" value="View"
-							styleClass="rounded-button ui-button-secondary" icon="pi pi-eye"
-							update="table growl"
-							action="#{doctorPrescriptionManagedBean.view}"
-							oncomplete="PF('PrescriptionDialog').show();">
+							</p:commandButton>
 
-							<f:setPropertyActionListener
-								target="#{doctorPrescriptionManagedBean.prescription.prescriptionId}"
-								value="#{prescription.prescriptionId}" />
-							<f:setPropertyActionListener
-								target="#{doctorPrescriptionManagedBean.prescription.appointmentId}"
-								value="#{prescription.appointmentId}" />
-						</p:commandButton>
-
-
+						</h:form>
 					</p:column>
 					<p:column headerText="">
-
-
 						<p:button value="Update" process="@this"
 							styleClass="rounded-button ui-button-sucess" icon="pi pi-pencil"
 							outcome="prescription.xhtml?id=#{prescription.appointmentId}&amp;patient=#{prescription.appointment.patient.fullName}">
-
 						</p:button>
-
 					</p:column>
-
 				</p:dataTable>
 
-				<p:dialog header="Prescription" id="rescriptionDialog"
+				<p:dialog  header="Prescription" id="rescriptionDialog"
 					widgetVar="PrescriptionDialog" modal="true">
 					<h:panelGrid columns="2">
-						<table>
-							<ui:repeat value="#{doctorPrescriptionManagedBean.prescriptionMedicines}" var="prescMedi">
-								<tr>
-									<td>#{prescMedi.dose}</td>
-									<td>#{prescMedi.duration}</td>
-								<!-- 	<td>#{user.email}</a></td>
-									<td>#{user.birthdate}</td> -->
-									</tr>
-							</ui:repeat>
-						</table>
-</h:panelGrid>
+						<p:dataTable
+							value="#{doctorPrescriptionManagedBean.prescriptionMedicines}"
+							var="prescriptionMedicine">
+
+							<p:column headerText="Medicine">
+								<p:outputLabel value="#{prescriptionMedicine.medicine.name}"></p:outputLabel>
+							</p:column>
+							<p:column headerText="Dose">
+								<p:outputLabel value="#{prescriptionMedicine.dose}"></p:outputLabel>
+							</p:column>
+							<p:column headerText="Duration">
+								<p:outputLabel value="#{prescriptionMedicine.duration}"></p:outputLabel>
+
+							</p:column>
+						</p:dataTable>
+
+					</h:panelGrid>
 				</p:dialog>
 			</div>
 

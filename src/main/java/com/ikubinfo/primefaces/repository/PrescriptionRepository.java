@@ -38,19 +38,16 @@ public class PrescriptionRepository {
 	private static final String INSERT_MEDICINE_PRESCRIPTION="INSERT INTO public.prescription_medicine(\r\n"
 			+ "	prescription_id, medicine_id, dose, duration)\r\n"
 			+ "	VALUES (:prescription_id, :medicine_id, :dose, :duartion);";
-	private static final String GET_MEDICINE_ID="select medicine_id from medicine where name= ?";
-	
-	private static final String GET_ALL_MEDICINES="SELECT medicine_id, name, strength FROM public.medicine";
-	
+
 	private static final String PRESCRIPTION_EXISTS= "select prescription_id from prescription where appointment_id=?";
 	
 	private static final String GET_PRESCRIPTION_MEDICINE="SELECT  medicine.medicine_id, dose, duration, prescription_medicine.prescription_medicine_id, medicine.name, prescription.appointment_id "
 			+ "FROM public.prescription_medicine inner join medicine on medicine.medicine_id=prescription_medicine.medicine_id "
 			+ "inner join prescription on prescription.prescription_id=prescription_medicine.prescription_id "
 			+ "where prescription.appointment_id=:appointment_id ";
-	private static final String UPDATE_PRESCRIPTION_MEDICINE="UPDATE public.prescription_medicine "
-			+ "	SET  medicine_id=:medicine_id,  duration=:duration, dose=:dose "
-			+ "	WHERE prescription_medicine_id=prescription_medicine_id;";
+//	private static final String UPDATE_PRESCRIPTION_MEDICINE="UPDATE public.prescription_medicine "
+//			+ "	SET  medicine_id=:medicine_id,  duration=:duration, dose=:dose "
+//			+ "	WHERE prescription_medicine_id=prescription_medicine_id;";
 	private static final String DELETE_PRESCRIPTION_MEDICINE="DELETE FROM public.prescription_medicine\r\n"
 			+ "	WHERE prescription_medicine_id=:prescription_medicine_id";
 	
@@ -102,20 +99,7 @@ public class PrescriptionRepository {
 		return perscriptionId;
 	}
 	
-	public List<Medicine> getAllMedicines(){
-		RowMapper<Medicine> rowMapper = (rs, rowNum) -> {
-			Medicine medicine = new Medicine(rs.getInt("medicine_id"), rs.getString("name"),
-					rs.getInt("strength"));
-			return medicine;
-		};
-		return namedParameterJdbcTemplate.query(GET_ALL_MEDICINES, rowMapper);
-	}
 	
-	public int getMedicineId(Medicine medicine) {
- 	int medicineId = jdbcTemplate.queryForObject(GET_MEDICINE_ID,
-				new Object[] { medicine.getName() }, Integer.class);
-	return medicineId;
-	}
 	
 	public List<PrescriptionMedicine> getPrescriptionMedicine(long appointmentId){
 		long prescriptionId = jdbcTemplate.queryForObject(PRESCRIPTION_EXISTS, new Object[] { appointmentId },

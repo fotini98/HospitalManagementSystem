@@ -37,9 +37,10 @@ public class DoctorPrescriptionManagedBean {
 		
 	}
 	
-	public void view(){
+	public void viewPrescription(){
+		System.out.println("from view");
 		prescriptionMedicines=prescriptionService.getPrescriptionMedicine(prescription.getAppointmentId());
-		System.out.println(prescriptionMedicines+"from view");
+		System.err.println(prescriptionMedicines+"from view");
 	}
 	
 

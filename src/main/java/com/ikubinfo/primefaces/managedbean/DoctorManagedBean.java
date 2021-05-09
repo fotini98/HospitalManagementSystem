@@ -23,7 +23,7 @@ public class DoctorManagedBean implements Serializable{
 	private Employee doctor;
 	private List<Employee> doctors;
 	private List<Department> departments; 
-
+	private String fullName;
 	
 	private Department department;
 	
@@ -40,11 +40,16 @@ public class DoctorManagedBean implements Serializable{
 	@PostConstruct
 	public void init() {
 
-		doctors = doctorService.getAllEmployees("Doctor");
+		doctors = doctorService.getAllEmployees("Doctor", fullName);
 		departments= doctorService.getAllDepartments();
 		doctor = new Employee();
 		department=new Department();
 
+	}
+	
+	public void filter() {
+		System.out.println("filter called"+fullName);
+		doctors = doctorService.getAllEmployees("Doctor", fullName);
 	}
 	
 	public void save() {
@@ -53,7 +58,7 @@ public class DoctorManagedBean implements Serializable{
 		doctor.setCreatedBy(loginBean.getEmployee().getFullName());
 		doctor.setModifiedBy(loginBean.getEmployee().getFullName());
 		if(doctorService.saveEmployee(doctor)) {
-			doctors = doctorService.getAllEmployees("Doctor");
+			doctors = doctorService.getAllEmployees("Doctor", null);
 			doctor=new Employee();
 			messages.showInfoMessage("Doctor was added successfully");
 		}else {
@@ -65,7 +70,7 @@ public class DoctorManagedBean implements Serializable{
         doctor.setModifiedBy(loginBean.getEmployee().getFullName());
 		System.out.println(doctor );
 		if(doctorService.deleteEmployee(doctor)) {
-			doctors = doctorService.getAllEmployees("Doctor");
+			doctors = doctorService.getAllEmployees("Doctor", null);
 		messages.showWarningMessage("Doctor was removed successfully");
 	}else {
 		messages.showErrorMessage("Something went wrong!!");
@@ -78,7 +83,7 @@ public class DoctorManagedBean implements Serializable{
 		 doctor.setModifiedBy(loginBean.getEmployee().getFullName());
 		System.out.println(doctor +" department "+department.getName());
 		if(doctorService.updateEmployee(doctor)) {
-			doctors = doctorService.getAllEmployees("Doctor");
+			doctors = doctorService.getAllEmployees("Doctor",null);
 		messages.showInfoMessage("Doctor was updated successfully");
 	}else {
 		messages.showInfoMessage("Something went wrong!!");
@@ -145,6 +150,15 @@ public class DoctorManagedBean implements Serializable{
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		System.out.println("setFullName called");
+		this.fullName = fullName;
 	}
 	
 	

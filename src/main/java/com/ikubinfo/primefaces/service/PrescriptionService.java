@@ -12,6 +12,7 @@ import com.ikubinfo.primefaces.model.Medicine;
 import com.ikubinfo.primefaces.model.Prescription;
 import com.ikubinfo.primefaces.model.PrescriptionMedicine;
 import com.ikubinfo.primefaces.repository.AppointmentRepository;
+import com.ikubinfo.primefaces.repository.MedicineRepository;
 import com.ikubinfo.primefaces.repository.PrescriptionRepository;
 
 @Service
@@ -23,6 +24,8 @@ public class PrescriptionService {
 	@Autowired
 	AppointmentRepository appointmentDao;
 	
+	@Autowired
+	MedicineRepository medicineDao;
 	
 	public List<Prescription> getAllPrescriptions(){
 		return dao.getAllPrescriptions();
@@ -38,7 +41,7 @@ public class PrescriptionService {
 			    
 				for(PrescriptionMedicine prescriptionMedicine: prescriptionMedicines ) {
 					prescriptionMedicine.setPrescriptionId(prescriptionId);
-					prescriptionMedicine.setMedicineId(dao.getMedicineId(prescriptionMedicine.getMedicine()));
+					prescriptionMedicine.setMedicineId(medicineDao.getMedicineId(prescriptionMedicine.getMedicine()));
 					 dao.insertPrescriptionMedicine(prescriptionMedicine);
 				}
 		
@@ -50,7 +53,7 @@ public class PrescriptionService {
 		 
 	}
 	public List<Medicine> getAllMedicines(){
-		return dao.getAllMedicines();
+		return medicineDao.getAllMedicines();
 	}
 	
 	public List<PrescriptionMedicine> getPrescriptionMedicine(long appointmentId){
@@ -68,12 +71,10 @@ public class PrescriptionService {
 		System.out.println(prescriptionId+"from update prescription Medicine"+prescriptionMedicines);
 		for(PrescriptionMedicine prescriptionMedicine: prescriptionMedicines ) {
 			prescriptionMedicine.setPrescriptionId(prescriptionId);
-			prescriptionMedicine.setMedicineId(dao.getMedicineId(prescriptionMedicine.getMedicine()));
+			prescriptionMedicine.setMedicineId(medicineDao.getMedicineId(prescriptionMedicine.getMedicine()));
 			 dao.updatePrescriptionMedicine(prescriptionMedicine);
 		}
-
 }
-
 
 	public boolean deletePrescriptionMedicine(PrescriptionMedicine prescriptionMedicine) {
 		return dao.deletePrescriptionMedicine(prescriptionMedicine);

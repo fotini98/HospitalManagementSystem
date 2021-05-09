@@ -3,6 +3,7 @@ package com.ikubinfo.primefaces.repository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.sql.DataSource;
 
@@ -55,22 +56,29 @@ public class EmployeeRepository {
 				.usingGeneratedKeyColumns("person_id");
 	}
 
-	public List<Employee> getAllEmployees(String roleName) {
-
+	public List<Employee> getAllEmployees(String roleName, String fullName) {
+		
+		String query=GET_EMPLOYEES_QUERY;
 		MapSqlParameterSource namedParameters = new MapSqlParameterSource();
-
+		if (!Objects.isNull(fullName) && !fullName.equals("")) {
+			fullName=fullName.replace(fullName, "%" + fullName + "%");
+			System.out.println(fullName+"from getAllEmployeess repo");
+			query = query.concat("and  LOWER(full_name) LIKE  LOWER(:fullName)");
+			namedParameters.addValue("fullName", fullName);	
+		}
+		
 		namedParameters.addValue("roleName", roleName);
-
-		return namedParameterJdbcTemplate.query(GET_EMPLOYEES_QUERY, namedParameters, new EmployeeRowMapper());
+		return namedParameterJdbcTemplate.query(query, namedParameters, new EmployeeRowMapper());
+		
 	}
 
 	public boolean saveEmployee(Employee employee) {
 
-		int personId = savePerson(employee);
+		//int personId = savePerson(employee);
 		int departmentId;
 		int roleId;
-		System.out.println("From saveEmployee person id " + personId);
-		if (personId > 0) {
+		System.out.println("From saveEmployee person id " + employee.getPersonId());
+		if (employee.getPersonId() > 0) {
 			departmentId = jdbcTemplate.queryForObject(GET_DEPARTMENT_ID,
 					new Object[] { employee.getDepartment().getName() }, Integer.class);
 			System.out.println(departmentId);
@@ -79,8 +87,8 @@ public class EmployeeRepository {
 						Integer.class);
 				if (roleId > 0) {
 					MapSqlParameterSource namedParameters = new MapSqlParameterSource();
-					System.out.println("saving person with person id: " + personId);
-					namedParameters.addValue("personId", personId);
+					System.out.println("saving person with person id: " + employee.getPersonId());
+					namedParameters.addValue("personId", employee.getPersonId());
 					namedParameters.addValue("departmentId", departmentId);
 					namedParameters.addValue("roleId", roleId);
 					int employeeInserted = this.namedParameterJdbcTemplate.update(INSERT_EMPLOYEE_QUERY,
@@ -89,11 +97,10 @@ public class EmployeeRepository {
 				}
 			}
 		}
-
 		return false;
 	}
 
-	private int savePerson(Employee employee) {
+	public int savePerson(Employee employee) {
 		System.out.println("saving person...........");
 		Map<String, Object> parameters = new HashMap<>();
 		parameters.put("full_name", employee.getFullName());

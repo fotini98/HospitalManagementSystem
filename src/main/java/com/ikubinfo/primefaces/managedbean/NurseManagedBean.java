@@ -26,6 +26,7 @@ public class NurseManagedBean implements Serializable{
 	
 	private Department department;
 	
+	private String fullName;
 	@ManagedProperty(value = "#{employeeService}")
 	private EmployeeService nurseService;
 	
@@ -38,7 +39,7 @@ public class NurseManagedBean implements Serializable{
 	@PostConstruct
 	public void init() {
 
-		nurses = nurseService.getAllEmployees("Nurse");
+		nurses = nurseService.getAllEmployees("Nurse", fullName);
 		departments= nurseService.getAllDepartments();
 		nurse = new Employee();
 		department=new Department();
@@ -51,7 +52,7 @@ public class NurseManagedBean implements Serializable{
 		nurse.setCreatedBy(loginBean.getEmployee().getFullName());
 		nurse.setModifiedBy(loginBean.getEmployee().getFullName());
 		if(nurseService.saveEmployee(nurse)) {
-			nurses = nurseService.getAllEmployees("Nurse");
+			nurses = nurseService.getAllEmployees("Nurse", null);
 			nurse=new Employee();
 			messages.showInfoMessage("Nurse was added successfully");
 		}else {
@@ -63,7 +64,7 @@ public class NurseManagedBean implements Serializable{
 		nurse.setRole(new Role(0,"Nurse"));
 		nurse.setModifiedBy(loginBean.getEmployee().getFullName());
 		if(nurseService.deleteEmployee(nurse)) {
-			nurses = nurseService.getAllEmployees("Nurse");
+			nurses = nurseService.getAllEmployees("Nurse", null);
 		messages.showInfoMessage("Nurse was removed successfully");
 	}else {
 		messages.showInfoMessage("Something went wrong!!");
@@ -75,7 +76,7 @@ public class NurseManagedBean implements Serializable{
 		nurse.setDepartment(department);
 		nurse.setModifiedBy(loginBean.getEmployee().getFullName());
 		if(nurseService.updateEmployee(nurse)) {
-			nurses = nurseService.getAllEmployees("Nurse");
+			nurses = nurseService.getAllEmployees("Nurse", null);
 		messages.showInfoMessage("Nurse was updated successfully");
 	}else {
 		messages.showInfoMessage("Something went wrong!!");
@@ -141,6 +142,14 @@ public class NurseManagedBean implements Serializable{
 
 	public void setLoginBean(LoginBean loginBean) {
 		this.loginBean = loginBean;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 	
 

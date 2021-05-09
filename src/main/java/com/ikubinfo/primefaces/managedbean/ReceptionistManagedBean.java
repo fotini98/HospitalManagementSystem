@@ -26,6 +26,7 @@ public class ReceptionistManagedBean implements Serializable{
 	
 	private Department department;
 	
+	private String fullName;
 	@ManagedProperty(value = "#{loginBean}")
 	private LoginBean loginBean;
 	
@@ -38,7 +39,7 @@ public class ReceptionistManagedBean implements Serializable{
 	@PostConstruct
 	public void init() {
 
-		receptionists = receptionistService.getAllEmployees("Receptionist");
+		receptionists = receptionistService.getAllEmployees("Receptionist",fullName );
 		departments= receptionistService.getAllDepartments();
 		receptionist = new Employee();
 		department=new Department();
@@ -51,7 +52,7 @@ public class ReceptionistManagedBean implements Serializable{
 		receptionist.setCreatedBy(loginBean.getEmployee().getFullName());
 		receptionist.setModifiedBy(loginBean.getEmployee().getFullName());
 		if(receptionistService.saveEmployee(receptionist)) {
-			receptionists = receptionistService.getAllEmployees("Receptionist");
+			receptionists = receptionistService.getAllEmployees("Receptionist", null);
 			receptionist=new Employee();
 			messages.showInfoMessage("Receptionist was added successfully");
 		}else {
@@ -63,7 +64,7 @@ public class ReceptionistManagedBean implements Serializable{
 		receptionist.setRole(new Role(0,"Receptionist"));
 		receptionist.setModifiedBy(loginBean.getEmployee().getFullName());
 		if(receptionistService.deleteEmployee(receptionist)) {
-			receptionists = receptionistService.getAllEmployees("Receptionist");
+			receptionists = receptionistService.getAllEmployees("Receptionist", null);
 		messages.showInfoMessage("Receptionist was removed successfully");
 	}else {
 		messages.showInfoMessage("Something went wrong!!");
@@ -75,7 +76,7 @@ public class ReceptionistManagedBean implements Serializable{
 		receptionist.setDepartment(department);
 		receptionist.setModifiedBy(loginBean.getEmployee().getFullName());
 		if(receptionistService.updateEmployee(receptionist)) {
-			receptionists = receptionistService.getAllEmployees("Receptionist");
+			receptionists = receptionistService.getAllEmployees("Receptionist", null);
 		messages.showInfoMessage("Receptionist was updated successfully");
 	}else {
 		messages.showInfoMessage("Something went wrong!!");
@@ -141,6 +142,14 @@ public class ReceptionistManagedBean implements Serializable{
 
 	public void setLoginBean(LoginBean loginBean) {
 		this.loginBean = loginBean;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 	
 	
